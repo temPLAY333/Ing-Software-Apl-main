@@ -1,0 +1,19 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "library",
+    "buildTool": "maven",
+    "cacheProvider": "hazelcast",
+    "clientFramework": "angular",
+    "entities": ["Publisher", "Author", "Client", "Book", "BorrowedBook"],
+    "jhipsterVersion": "8.11.0",
+    "jwtSecretKey": "NGVlMDAxMjA0MzZjZmZiZGYyZDM4YWJlZmVlZmIwM2U3OTYxODgyNThhYTk5OTAzYmMzMDZkNzhjYzM4NTQxNjY4YmIxOTZhZTk1ZTMwOTM2Zjg2NGU2YzE5MmQ2MWQyN2I1ZDYxMTE4ODE4NzcyODZkOTc3MGEzMjFhMGViODM=",
+    "languages": ["en", "ro", "ru"],
+    "lastLiquibaseTimestamp": 1771778076000,
+    "nativeLanguage": "en",
+    "packageName": "com.sgaraba.library",
+    "prodDatabaseType": "postgresql",
+    "testFrameworks": ["cypress"]
+  }
+}
