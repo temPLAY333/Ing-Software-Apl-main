@@ -1,0 +1,178 @@
+<div class="borrow-container">
+  <div class="borrow-header">
+    <h1>
+      <i class="bi bi-arrow-left-right me-3"></i>
+      Sistema de Préstamos
+    </h1>
+    <p class="subtitle">Gestiona los préstamos de libros de la biblioteca</p>
+  </div>
+
+  <div class="row">
+    <!-- Formulario de Préstamo -->
+    <div class="col-md-5">
+      <div class="borrow-form-card">
+        <h4>
+          <i class="bi bi-plus-circle me-2"></i>
+          Registrar Nuevo Préstamo
+        </h4>
+
+        @if (success()) {
+          <div class="alert alert-success">
+            <i class="bi bi-check-circle me-2"></i>
+            ¡Préstamo registrado exitosamente!
+          </div>
+        }
+
+        @if (error()) {
+          <div class="alert alert-danger">
+            <i class="bi bi-x-circle me-2"></i>
+            Error al registrar el préstamo. Intenta nuevamente.
+          </div>
+        }
+
+        <form [formGroup]="borrowForm" (ngSubmit)="borrowBook()">
+          <div class="form-group">
+            <label for="clientId" class="form-label">
+              <i class="bi bi-person me-2"></i>
+              Cliente
+            </label>
+            <select id="clientId" class="form-select" formControlName="clientId">
+              <option value="">Seleccionar cliente...</option>
+              @for (client of clients(); track client.id) {
+                <option [value]="client.id">
+                  {{ client.firstName }} {{ client.lastName }} - {{ client.email }}
+                </option>
+              }
+            </select>
+            @if (borrowForm.get('clientId')?.invalid && borrowForm.get('clientId')?.touched) {
+              <small class="text-danger">Selecciona un cliente</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="bookId" class="form-label">
+              <i class="bi bi-book me-2"></i>
+              Libro
+            </label>
+            <select id="bookId" class="form-select" formControlName="bookId">
+              <option value="">Seleccionar libro...</option>
+              @for (book of availableBooks(); track book.id) {
+                <option [value]="book.id">
+                  {{ book.name }} ({{ book.copies }} disponibles)
+                </option>
+              }
+            </select>
+            @if (borrowForm.get('bookId')?.invalid && borrowForm.get('bookId')?.touched) {
+              <small class="text-danger">Selecciona un libro</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="borrowDate" class="form-label">
+              <i class="bi bi-calendar-event me-2"></i>
+              Fecha de Préstamo
+            </label>
+            <input
+              type="date"
+              id="borrowDate"
+              class="form-control"
+              formControlName="borrowDate"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-borrow w-100"
+            [disabled]="borrowForm.invalid"
+          >
+            <i class="bi bi-check-lg me-2"></i>
+            Registrar Préstamo
+          </button>
+        </form>
+
+        <div class="stats-grid mt-4">
+          <div class="stat-box">
+            <i class="bi bi-book-half"></i>
+            <div>
+              <div class="stat-value">{{ availableBooks().length }}</div>
+              <div class="stat-label">Libros disponibles</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            <i class="bi bi-bookmark-check"></i>
+            <div>
+              <div class="stat-value">{{ borrowedBooks().length }}</div>
+              <div class="stat-label">Préstamos activos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de Préstamos Activos -->
+    <div class="col-md-7">
+      <div class="borrowed-books-list">
+        <h4>
+          <i class="bi bi-list-check me-2"></i>
+          Préstamos Activos
+        </h4>
+
+        @if (isLoading()) {
+          <div class="loading-spinner">
+            <div class="spinner-border text-success" role="status">
+              <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p>Cargando préstamos...</p>
+          </div>
+        } @else if (borrowedBooks().length === 0) {
+          <div class="no-results">
+            <i class="bi bi-inbox"></i>
+            <h5>No hay préstamos activos</h5>
+            <p>Registra el primer préstamo usando el formulario</p>
+          </div>
+        } @else {
+          <div class="borrowed-list">
+            @for (borrowedBook of borrowedBooks(); track trackId($index, borrowedBook)) {
+              <div class="borrowed-item">
+                <div class="borrowed-info">
+                  <div class="book-details">
+                    <h5>
+                      <i class="bi bi-book me-2"></i>
+                      {{ borrowedBook.book?.name }}
+                    </h5>
+                    <p class="isbn">ISBN: {{ borrowedBook.book?.isbn }}</p>
+                  </div>
+                  <div class="client-details">
+                    <p>
+                      <i class="bi bi-person me-2"></i>
+                      <strong>Cliente:</strong>
+                      {{ borrowedBook.client?.firstName }} {{ borrowedBook.client?.lastName }}
+                    </p>
+                    <p>
+                      <i class="bi bi-envelope me-2"></i>
+                      {{ borrowedBook.client?.email }}
+                    </p>
+                  </div>
+                  <div class="borrow-date">
+                    <i class="bi bi-calendar3 me-2"></i>
+                    <span>Prestado el: {{ borrowedBook.borrowDate | date: 'dd/MM/yyyy' }}</span>
+                  </div>
+                </div>
+                <div class="borrowed-actions">
+                  <button
+                    type="button"
+                    class="btn btn-success btn-return"
+                    (click)="returnBook(borrowedBook)"
+                  >
+                    <i class="bi bi-arrow-return-left me-2"></i>
+                    Devolver
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

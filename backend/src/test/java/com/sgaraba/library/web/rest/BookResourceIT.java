@@ -258,18 +258,16 @@ class BookResourceIT {
             .andExpect(jsonPath("$.[*].cover").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_COVER))));
     }
 
-    @SuppressWarnings({ "unchecked" })
     void getAllBooksWithEagerRelationshipsIsEnabled() throws Exception {
-        when(bookServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(bookServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl<>(new ArrayList<>()));
 
         restBookMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
         verify(bookServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
-    @SuppressWarnings({ "unchecked" })
     void getAllBooksWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(bookServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(bookServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl<>(new ArrayList<>()));
 
         restBookMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(bookRepositoryMock, times(1)).findAll(any(Pageable.class));

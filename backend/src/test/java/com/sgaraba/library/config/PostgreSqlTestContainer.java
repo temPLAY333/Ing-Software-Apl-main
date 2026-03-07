@@ -21,6 +21,7 @@ public class PostgreSqlTestContainer implements SqlTestContainer {
     }
 
     @Override
+    @SuppressWarnings("resource")
     public void afterPropertiesSet() {
         if (null == postgreSQLContainer) {
             postgreSQLContainer = new PostgreSQLContainer<>("postgres:17.4")

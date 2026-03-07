@@ -3,7 +3,7 @@
 @import 'bootstrap/scss/variables';
 
 /* ==============================================================
-Bootstrap tweaks
+Dark Theme with Green colors for Library Management System
 ===============================================================*/
 
 body,
@@ -12,12 +12,16 @@ h2,
 h3,
 h4 {
   font-weight: 300;
+  background-color: #0a0f0d;
+  color: #ecf0f1;
 }
 
-/* Increase contrast of links to get 100% on Lighthouse Accessibility Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
+/* Links with green theme */
 a {
-  color: #533f03;
+  color: #2ecc71;
   font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 /* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
@@ -31,13 +35,14 @@ a:not([href]):not([tabindex]):hover.dropdown-item {
 }
 
 a:hover {
-  color: #533f03;
+  color: #58d68d;
   /* make sure browsers use the pointer cursor for anchors, even with no href */
   cursor: pointer;
 }
 
 .dropdown-item:hover {
   color: $dropdown-link-hover-color;
+  background-color: #1a2620;
 }
 
 /* ==========================================================================
@@ -57,11 +62,11 @@ Generic styles
 /* Error highlight on input fields */
 .ng-valid[required],
 .ng-valid.required {
-  border-left: 5px solid green;
+  border-left: 5px solid #2ecc71;
 }
 
 .ng-invalid:not(form) {
-  border-left: 5px solid red;
+  border-left: 5px solid #e74c3c;
 }
 
 /* other generic styles */
@@ -69,12 +74,14 @@ Generic styles
 .jh-card {
   padding: 1.5%;
   margin-top: 20px;
-  border: none;
+  border: 1px solid #1e8449;
+  background-color: #121a15;
+  box-shadow: 0 4px 6px rgba(46, 204, 113, 0.1);
 }
 
 .error {
   color: white;
-  background-color: red;
+  background-color: #e74c3c;
 }
 
 .pad {
@@ -95,16 +102,27 @@ Generic styles
 }
 
 .form-control {
-  background-color: #fff;
+  background-color: #1a2620;
+  border: 1px solid #1e8449;
+  color: #ecf0f1;
+}
+
+.form-control:focus {
+  background-color: #1a2620;
+  border-color: #2ecc71;
+  color: #ecf0f1;
+  box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
 }
 
 .readonly {
-  background-color: #eee;
+  background-color: #0f1511;
   opacity: 1;
 }
 
 .footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  border-top: 1px solid #1e8449;
+  background-color: #121a15;
+  color: #95a5a6;
 }
 
 .hand,
@@ -233,4 +251,208 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
     }
   }
 }
+
+/* ==============================================================
+Dark Theme Custom Components
+===============================================================*/
+
+/* Buttons */
+.btn-primary {
+  background-color: #2ecc71;
+  border-color: #2ecc71;
+  color: #0a0f0d;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: #27ae60;
+  border-color: #27ae60;
+  box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+}
+
+.btn-secondary {
+  background-color: #1a2620;
+  border-color: #1e8449;
+  color: #ecf0f1;
+}
+
+.btn-secondary:hover {
+  background-color: #1e8449;
+  border-color: #2ecc71;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+  border-color: #c0392b;
+}
+
+/* Cards */
+.card {
+  background-color: #121a15;
+  border: 1px solid #1e8449;
+  color: #ecf0f1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+  background-color: #1a2620;
+  border-bottom: 1px solid #2ecc71;
+  color: #2ecc71;
+  font-weight: 600;
+}
+
+/* Tables */
+.table {
+  color: #ecf0f1;
+}
+
+.table thead th {
+  background-color: #1a2620;
+  border-color: #1e8449;
+  color: #2ecc71;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(46, 204, 113, 0.05);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(46, 204, 113, 0.1);
+  cursor: pointer;
+}
+
+/* Modals */
+.modal-content {
+  background-color: #121a15;
+  border: 1px solid #1e8449;
+  color: #ecf0f1;
+}
+
+.modal-header {
+  border-bottom: 1px solid #1e8449;
+  background-color: #1a2620;
+}
+
+.modal-footer {
+  border-top: 1px solid #1e8449;
+  background-color: #1a2620;
+}
+
+/* Alerts */
+.alert-success {
+  background-color: rgba(46, 204, 113, 0.2);
+  border-color: #2ecc71;
+  color: #a9dfbf;
+}
+
+.alert-warning {
+  background-color: rgba(241, 196, 15, 0.2);
+  border-color: #f1c40f;
+  color: #f4d03f;
+}
+
+.alert-danger {
+  background-color: rgba(231, 76, 60, 0.2);
+  border-color: #e74c3c;
+  color: #ec7063;
+}
+
+.alert-info {
+  background-color: rgba(52, 152, 219, 0.2);
+  border-color: #3498db;
+  color: #85c1e9;
+}
+
+/* Navbar Custom */
+.navbar {
+  background-color: #121a15 !important;
+  border-bottom: 2px solid #2ecc71;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Dropdown */
+.dropdown-menu {
+  background-color: #1a2620;
+  border: 1px solid #1e8449;
+}
+
+.dropdown-item {
+  color: #ecf0f1;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: #121a15;
+  color: #2ecc71;
+}
+
+/* Pagination */
+.page-link {
+  background-color: #1a2620;
+  border-color: #1e8449;
+  color: #2ecc71;
+}
+
+.page-link:hover {
+  background-color: #1e8449;
+  border-color: #2ecc71;
+  color: #ecf0f1;
+}
+
+.page-item.active .page-link {
+  background-color: #2ecc71;
+  border-color: #2ecc71;
+  color: #0a0f0d;
+}
+
+/* Custom Library Styles */
+.library-search-bar {
+  background-color: #1a2620;
+  border: 2px solid #1e8449;
+  border-radius: 0.35rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.book-card {
+  background: linear-gradient(135deg, #121a15 0%, #1a2620 100%);
+  border: 1px solid #1e8449;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(46, 204, 113, 0.2);
+  border-color: #2ecc71;
+}
+
+.filter-section {
+  background-color: #121a15;
+  border: 1px solid #1e8449;
+  border-radius: 0.35rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #1e8449 0%, #2ecc71 100%);
+  color: #0a0f0d;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(46, 204, 113, 0.4);
+}
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */

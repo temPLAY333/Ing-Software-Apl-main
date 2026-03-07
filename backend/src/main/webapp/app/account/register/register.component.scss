@@ -1,0 +1,255 @@
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0f0d 0%, #1a2620 100%);
+  padding: 2rem 0;
+}
+
+.register-card {
+  background: linear-gradient(135deg, #121a15 0%, #1a2620 100%);
+  border: 2px solid #1e8449;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(46, 204, 113, 0.2);
+  padding: 3rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    color: #2ecc71;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(46, 204, 113, 0.3);
+  }
+
+  .subtitle {
+    color: #95a5a6;
+    font-size: 0.9rem;
+  }
+}
+
+.register-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+
+  i {
+    font-size: 2.5rem;
+    color: #0a0f0d;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    color: #a9dfbf;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .form-control {
+    background-color: #0a0f0d;
+    border: 2px solid #1e8449;
+    color: #ecf0f1;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+
+    &:focus {
+      background-color: #0a0f0d;
+      border-color: #2ecc71;
+      box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
+      color: #ecf0f1;
+    }
+
+    &::placeholder {
+      color: #95a5a6;
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: #e74c3c;
+    }
+
+    &.ng-valid.ng-touched {
+      border-color: #2ecc71;
+    }
+  }
+
+  .form-text {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+
+    &.text-danger {
+      color: #ec7063;
+      display: block;
+    }
+  }
+}
+
+.password-strength-bar {
+  margin-top: 0.5rem;
+  height: 5px;
+  background-color: #1e8449;
+  border-radius: 3px;
+  overflow: hidden;
+
+  .strength-level {
+    height: 100%;
+    transition: all 0.3s ease;
+
+    &.weak {
+      width: 33%;
+      background-color: #e74c3c;
+    }
+
+    &.medium {
+      width: 66%;
+      background-color: #f39c12;
+    }
+
+    &.strong {
+      width: 100%;
+      background-color: #2ecc71;
+    }
+  }
+}
+
+.btn-register {
+  width: 100%;
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  border: none;
+  color: #0a0f0d;
+  padding: 0.875rem 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+  margin-top: 1.5rem;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(46, 204, 113, 0.4);
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.alert {
+  border-radius: 0.5rem;
+  border: 1px solid;
+  margin-bottom: 1.5rem;
+
+  &.alert-success {
+    background-color: rgba(46, 204, 113, 0.15);
+    border-color: #2ecc71;
+    color: #a9dfbf;
+  }
+
+  &.alert-danger {
+    background-color: rgba(231, 76, 60, 0.15);
+    border-color: #e74c3c;
+    color: #ec7063;
+  }
+
+  &.alert-info {
+    background-color: rgba(52, 152, 219, 0.15);
+    border-color: #3498db;
+    color: #85c1e9;
+  }
+}
+
+.register-links {
+  margin-top: 2rem;
+  text-align: center;
+
+  .alert-link {
+    color: #2ecc71;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #58d68d;
+      text-decoration: underline;
+    }
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #1e8449;
+  }
+
+  span {
+    padding: 0 1rem;
+    color: #95a5a6;
+    font-size: 0.9rem;
+  }
+}
+
+.password-requirements {
+  background-color: rgba(46, 204, 113, 0.1);
+  border: 1px solid #1e8449;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-top: 1rem;
+
+  h6 {
+    color: #2ecc71;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      color: #95a5a6;
+      font-size: 0.85rem;
+      padding: 0.25rem 0;
+
+      &::before {
+        content: '✓ ';
+        color: #2ecc71;
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

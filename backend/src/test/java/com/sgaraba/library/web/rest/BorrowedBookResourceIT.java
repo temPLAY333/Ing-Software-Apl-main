@@ -164,18 +164,16 @@ class BorrowedBookResourceIT {
             .andExpect(jsonPath("$.[*].borrowDate").value(hasItem(DEFAULT_BORROW_DATE.toString())));
     }
 
-    @SuppressWarnings({ "unchecked" })
     void getAllBorrowedBooksWithEagerRelationshipsIsEnabled() throws Exception {
-        when(borrowedBookServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(borrowedBookServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl<>(new ArrayList<>()));
 
         restBorrowedBookMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
 
         verify(borrowedBookServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
-    @SuppressWarnings({ "unchecked" })
     void getAllBorrowedBooksWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(borrowedBookServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(borrowedBookServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl<>(new ArrayList<>()));
 
         restBorrowedBookMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
         verify(borrowedBookRepositoryMock, times(1)).findAll(any(Pageable.class));

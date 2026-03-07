@@ -5,10 +5,22 @@
  * Make sure not to add !default to values here
  */
 
+// Dark Theme with Green Colors
+$dark-bg: #0a0f0d;
+$dark-bg-secondary: #121a15;
+$dark-bg-tertiary: #1a2620;
+$green-primary: #2ecc71;
+$green-secondary: #27ae60;
+$green-dark: #1e8449;
+$green-light: #58d68d;
+$green-accent: #a9dfbf;
+$text-light: #ecf0f1;
+$text-muted: #95a5a6;
+
 // Options:
 // Quickly modify global styling by enabling or disabling optional features.
 $enable-rounded: true;
-$enable-shadows: false;
+$enable-shadows: true;
 $enable-gradients: false;
 $enable-transitions: true;
 $enable-hover-media-query: false;
@@ -18,19 +30,57 @@ $enable-print-styles: true;
 // Components:
 // Define common padding and border radius sizes and more.
 
-$border-radius: 0.15rem;
-$border-radius-lg: 0.125rem;
-$border-radius-sm: 0.1rem;
+$border-radius: 0.35rem;
+$border-radius-lg: 0.5rem;
+$border-radius-sm: 0.25rem;
 
 // Body:
 // Settings for the `<body>` element.
 
-$body-bg: #ffffff;
+$body-bg: $dark-bg;
+$body-color: $text-light;
 
 // Typography:
 // Font, line-height, and color for body text, headings, and more.
 
 $font-size-base: 1rem;
 
-$dropdown-link-hover-color: white;
-$dropdown-link-hover-bg: #343a40;
+// Links
+$link-color: $green-primary;
+$link-hover-color: $green-light;
+
+// Cards
+$card-bg: $dark-bg-secondary;
+$card-border-color: $green-dark;
+
+// Dropdown
+$dropdown-bg: $dark-bg-tertiary;
+$dropdown-border-color: $green-dark;
+$dropdown-link-color: $text-light;
+$dropdown-link-hover-color: $green-primary;
+$dropdown-link-hover-bg: $dark-bg-secondary;
+
+// Forms
+$input-bg: $dark-bg-tertiary;
+$input-color: $text-light;
+$input-border-color: $green-dark;
+$input-focus-border-color: $green-primary;
+$input-focus-box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
+
+// Buttons
+$btn-border-radius: $border-radius;
+
+// Navbar
+$navbar-dark-color: $text-light;
+$navbar-dark-hover-color: $green-primary;
+$navbar-dark-active-color: $green-light;
+
+// Tables
+$table-bg: transparent;
+$table-cell-padding-y: 0.75rem;
+$table-cell-padding-x: 0.75rem;
+$table-striped-bg: rgba(46, 204, 113, 0.05);
+$table-hover-bg: rgba(46, 204, 113, 0.1);
+
+// Alerts
+$alert-border-radius: $border-radius;

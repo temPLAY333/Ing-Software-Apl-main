@@ -14,6 +14,11 @@ const borrowedBookRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: 'borrow',
+    loadComponent: () => import('./borrow/borrow-book.component').then(m => m.default),
+    canActivate: [UserRouteAccessService],
+  },
+  {
     path: ':id/view',
     loadComponent: () => import('./detail/borrowed-book-detail.component').then(m => m.BorrowedBookDetailComponent),
     resolve: {

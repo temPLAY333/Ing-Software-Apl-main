@@ -14,6 +14,11 @@ const bookRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: 'search',
+    loadComponent: () => import('./search/book-search.component').then(m => m.default),
+    canActivate: [UserRouteAccessService],
+  },
+  {
     path: ':id/view',
     loadComponent: () => import('./detail/book-detail.component').then(m => m.BookDetailComponent),
     resolve: {

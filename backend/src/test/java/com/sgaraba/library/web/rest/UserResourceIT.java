@@ -13,7 +13,6 @@ import com.sgaraba.library.security.AuthoritiesConstants;
 import com.sgaraba.library.service.UserService;
 import com.sgaraba.library.service.dto.AdminUserDTO;
 import com.sgaraba.library.service.mapper.UserMapper;
-import jakarta.persistence.EntityManager;
 import java.util.*;
 import java.util.function.Consumer;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -68,9 +67,6 @@ class UserResourceIT {
 
     @Autowired
     private UserMapper userMapper;
-
-    @Autowired
-    private EntityManager em;
 
     @Autowired
     private CacheManager cacheManager;

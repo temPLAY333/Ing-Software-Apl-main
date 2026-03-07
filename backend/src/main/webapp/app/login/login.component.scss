@@ -1,0 +1,184 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0f0d 0%, #1a2620 100%);
+  padding: 2rem 0;
+}
+
+.login-card {
+  background: linear-gradient(135deg, #121a15 0%, #1a2620 100%);
+  border: 2px solid #1e8449;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(46, 204, 113, 0.2);
+  padding: 3rem;
+  width: 100%;
+  max-width: 450px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    color: #2ecc71;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(46, 204, 113, 0.3);
+  }
+
+  .subtitle {
+    color: #95a5a6;
+    font-size: 0.9rem;
+  }
+}
+
+.login-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+
+  i {
+    font-size: 2.5rem;
+    color: #0a0f0d;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    color: #a9dfbf;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .form-control {
+    background-color: #0a0f0d;
+    border: 2px solid #1e8449;
+    color: #ecf0f1;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+
+    &:focus {
+      background-color: #0a0f0d;
+      border-color: #2ecc71;
+      box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
+      color: #ecf0f1;
+    }
+
+    &::placeholder {
+      color: #95a5a6;
+    }
+  }
+}
+
+.form-check {
+  margin: 1.5rem 0;
+
+  .form-check-label {
+    color: #ecf0f1;
+    cursor: pointer;
+  }
+
+  .form-check-input {
+    background-color: #0a0f0d;
+    border: 2px solid #1e8449;
+    cursor: pointer;
+
+    &:checked {
+      background-color: #2ecc71;
+      border-color: #2ecc71;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
+    }
+  }
+}
+
+.btn-login {
+  width: 100%;
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  border: none;
+  color: #0a0f0d;
+  padding: 0.875rem 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(46, 204, 113, 0.4);
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.alert {
+  border-radius: 0.5rem;
+  border: 1px solid;
+
+  &.alert-danger {
+    background-color: rgba(231, 76, 60, 0.15);
+    border-color: #e74c3c;
+    color: #ec7063;
+  }
+
+  &.alert-warning {
+    background-color: rgba(241, 196, 15, 0.15);
+    border-color: #f1c40f;
+    color: #f4d03f;
+  }
+}
+
+.login-links {
+  margin-top: 2rem;
+
+  .alert-link {
+    color: #2ecc71;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #58d68d;
+      text-decoration: underline;
+    }
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #1e8449;
+  }
+
+  span {
+    padding: 0 1rem;
+    color: #95a5a6;
+    font-size: 0.9rem;
+  }
+}

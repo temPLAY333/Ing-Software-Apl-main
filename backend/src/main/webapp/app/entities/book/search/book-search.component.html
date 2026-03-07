@@ -1,0 +1,160 @@
+<div class="book-search-container">
+  <div class="search-header">
+    <h1>
+      <i class="bi bi-search me-3"></i>
+      Búsqueda de Libros
+    </h1>
+    <p class="subtitle">Encuentra el libro perfecto en nuestra biblioteca</p>
+  </div>
+
+  <div class="row">
+    <!-- Filtros -->
+    <div class="col-md-3">
+      <div class="filter-panel">
+        <h5>
+          <i class="bi bi-funnel me-2"></i>
+          Filtros
+        </h5>
+
+        <form [formGroup]="searchForm" (ngSubmit)="search()">
+          <div class="filter-section">
+            <label for="searchTerm" class="form-label">Buscar por nombre o ISBN</label>
+            <input
+              type="text"
+              id="searchTerm"
+              class="form-control"
+              formControlName="searchTerm"
+              placeholder="Ingresa nombre o ISBN..."
+            />
+          </div>
+
+          <div class="filter-section">
+            <label for="publisher" class="form-label">Editorial</label>
+            <select id="publisher" class="form-select" formControlName="publisher">
+              <option value="">Todas las editoriales</option>
+              @for (publisher of publishers(); track publisher.id) {
+                <option [value]="publisher.id">{{ publisher.name }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="filter-section">
+            <label for="author" class="form-label">Autor</label>
+            <select id="author" class="form-select" formControlName="author">
+              <option value="">Todos los autores</option>
+              @for (author of authors(); track author.id) {
+                <option [value]="author.id">{{ author.firstName }} {{ author.lastName }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="filter-section">
+            <label class="form-label">Año de publicación</label>
+            <div class="row g-2">
+              <div class="col-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="yearFrom"
+                  placeholder="Desde"
+                />
+              </div>
+              <div class="col-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="yearTo"
+                  placeholder="Hasta"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <button type="submit" class="btn btn-primary w-100 mb-2">
+              <i class="bi bi-search me-2"></i>
+              Buscar
+            </button>
+            <button type="button" class="btn btn-secondary w-100" (click)="reset()">
+              <i class="bi bi-arrow-clockwise me-2"></i>
+              Limpiar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="stats-panel mt-3">
+        <div class="stat-item">
+          <i class="bi bi-book"></i>
+          <div>
+            <div class="stat-value">{{ books().length }}</div>
+            <div class="stat-label">Libros encontrados</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="col-md-9">
+      @if (isLoading()) {
+        <div class="loading-spinner">
+          <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+          <p>Cargando libros...</p>
+        </div>
+      } @else if (books().length === 0) {
+        <div class="no-results">
+          <i class="bi bi-inbox"></i>
+          <h3>No se encontraron libros</h3>
+          <p>Intenta ajustar los filtros de búsqueda</p>
+        </div>
+      } @else {
+        <div class="books-grid">
+          @for (book of books(); track trackId($index, book)) {
+            <div class="book-card" (click)="viewDetails(book)">
+              <div class="book-cover">
+                @if (book.cover) {
+                  <img [src]="'data:' + book.coverContentType + ';base64,' + book.cover" [alt]="book.name" />
+                } @else {
+                  <div class="no-cover">
+                    <i class="bi bi-book"></i>
+                  </div>
+                }
+              </div>
+              <div class="book-info">
+                <h5 class="book-title">{{ book.name }}</h5>
+                <p class="book-isbn">
+                  <i class="bi bi-upc-scan me-1"></i>
+                  ISBN: {{ book.isbn }}
+                </p>
+                <p class="book-publisher">
+                  <i class="bi bi-building me-1"></i>
+                  {{ book.publisher?.name || 'Sin editorial' }}
+                </p>
+                <p class="book-year">
+                  <i class="bi bi-calendar3 me-1"></i>
+                  {{ book.publishYear }}
+                </p>
+                <div class="book-footer">
+                  <div class="book-copies">
+                    <i class="bi bi-stack me-1"></i>
+                    {{ book.copies }} copias disponibles
+                  </div>
+                  @if (book.authors && book.authors.length > 0) {
+                    <div class="book-authors">
+                      <i class="bi bi-person me-1"></i>
+                      @for (author of book.authors; track author.id; let last = $last) {
+                        <span>{{ author.firstName }} {{ author.lastName }}@if (!last) {, }</span>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>
