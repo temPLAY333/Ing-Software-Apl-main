@@ -155,7 +155,7 @@
                   </div>
                   <div class="borrow-date">
                     <i class="bi bi-calendar3 me-2"></i>
-                    <span>Prestado el: {{ borrowedBook.borrowDate | date: 'dd/MM/yyyy' }}</span>
+                    <span>Prestado el: {{ borrowedBook.borrowDate?.toDate() | date: 'dd/MM/yyyy' }}</span>
                   </div>
                 </div>
                 <div class="borrowed-actions">

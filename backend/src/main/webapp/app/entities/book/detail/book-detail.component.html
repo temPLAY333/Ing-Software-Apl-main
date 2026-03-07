@@ -35,10 +35,10 @@
           <dd>
             @if (bookRef.cover) {
               <div>
-                <a (click)="openFile(bookRef.cover ?? '', bookRef.coverContentType)">
+                <a (click)="openFile(bookRef.cover, bookRef.coverContentType)">
                   <img [src]="'data:' + bookRef.coverContentType + ';base64,' + bookRef.cover" style="max-width: 100%" alt="book" />
                 </a>
-                {{ bookRef.coverContentType }}, {{ byteSize(bookRef.cover ?? '') }}
+                {{ bookRef.coverContentType }}, {{ byteSize(bookRef.cover) }}
               </div>
             }
           </dd>

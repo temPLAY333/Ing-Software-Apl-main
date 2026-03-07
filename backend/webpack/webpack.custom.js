@@ -135,5 +135,23 @@ module.exports = async (config, options, targetOptions) => {
     // jhipster-needle-add-webpack-config - JHipster will add custom config
   );
 
+  // Suppress Sass deprecation warnings for @import
+  if (config.module && config.module.rules) {
+    config.module.rules.forEach(rule => {
+      if (rule.test && (rule.test.toString().includes('scss') || rule.test.toString().includes('sass'))) {
+        if (Array.isArray(rule.use)) {
+          rule.use.forEach(use => {
+            if (typeof use === 'object' && use.loader && use.loader.includes('sass-loader')) {
+              use.options = use.options || {};
+              use.options.api = 'modern';
+              use.options.sassOptions = use.options.sassOptions || {};
+              use.options.sassOptions.silenceDeprecations = ['import'];
+            }
+          });
+        }
+      }
+    });
+  }
+
   return config;
 };
