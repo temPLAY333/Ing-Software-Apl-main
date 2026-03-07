@@ -5,27 +5,61 @@
     <!-- Patterns based on https://github.com/spring-projects/spring-boot/blob/v3.0.0/spring-boot-project/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
     <conversionRule conversionWord="crlf" converterClass="com.sgaraba.library.config.CRLFLogConverter" />
     <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSSXXX}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %crlf(%m){red} %n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
-    <!--
-    <property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN:-%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSSXXX}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } &#45;&#45;&#45; [%t] %-40.40logger{39} : %crlf(%m) %n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    -->
+    <property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN:-%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSSXXX}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %crlf(%m) %n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
-    <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
-    <!--
-    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+    <!-- ================================================ -->
+    <!-- FILE APPENDER - Standard log files              -->
+    <!-- ================================================ -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
 
-    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <!-- ================================================ -->
+    <!-- LOGSTASH APPENDER - JSON format for ELK Stack   -->
+    <!-- ================================================ -->
+    <appender name="LOGSTASH" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/application-logstash.json</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/application-logstash.%d{yyyy-MM-dd}.json</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"app":"library","environment":"${ENVIRONMENT:-dev}"}</customFields>
+            <includeMdc>true</includeMdc>
+            <includeContext>true</includeContext>
+            <includeTags>true</includeTags>
+        </encoder>
+    </appender>
+
+    <!-- ================================================ -->
+    <!-- ASYNC APPENDER - Non-blocking logging            -->
+    <!-- ================================================ -->
+    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
         <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
         <appender-ref ref="FILE"/>
     </appender>
 
-    <root level="${logging.level.root}">
-        <appender-ref ref="ASYNC"/>
-    </root>
-    -->
+    <appender name="ASYNC_LOGSTASH" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="LOGSTASH"/>
+    </appender>
 
     <logger name="com.sgaraba.library" level="INFO"/>
 
@@ -69,8 +103,14 @@
     <!-- jhipster-needle-logback-add-log - JHipster will add a new log with level -->
 
     <springProperty name="log.level" source="logging.level.root" defaultValue="INFO" />
+
+    <!-- ================================================ -->
+    <!-- ROOT LOGGER - Console + File + ELK              -->
+    <!-- ================================================ -->
     <root level="${log.level}">
         <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ASYNC_FILE" />
+        <appender-ref ref="ASYNC_LOGSTASH" />
     </root>
 
     <!-- Prevent logback from outputting its own status -->

@@ -1,0 +1,167 @@
+# ================================
+# Docker Compose - Full Stack with ELK
+# Application + PostgreSQL + ELK Stack
+# ================================
+version: '3.8'
+
+services:
+  # ================================
+  # Application
+  # ================================
+  app:
+    image: library-app:latest
+    container_name: library-app
+    build:
+      context: .
+      dockerfile: Dockerfile.simple
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/library
+      - SPRING_DATASOURCE_USERNAME=library
+      - SPRING_DATASOURCE_PASSWORD=library
+      - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgresql:5432/library
+      - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
+      - ENVIRONMENT=production
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    ports:
+      - "8080:8080"
+    volumes:
+      - app_logs:/app/logs
+    networks:
+      - app-network
+      - elk
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      logstash:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/management/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # ================================
+  # PostgreSQL Database
+  # ================================
+  postgresql:
+    image: postgres:16.2-alpine
+    container_name: library-postgres
+    environment:
+      - POSTGRES_DB=library
+      - POSTGRES_USER=library
+      - POSTGRES_PASSWORD=library
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U library"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ================================
+  # Elasticsearch
+  # ================================
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: library-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.monitoring.collection.enabled=true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    networks:
+      - elk
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ================================
+  # Logstash
+  # ================================
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.11.0
+    container_name: library-logstash
+    volumes:
+      - ./src/main/docker/logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./src/main/docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    environment:
+      - "LS_JAVA_OPTS=-Xmx256m -Xms256m"
+    networks:
+      - elk
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9600/_node/stats || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ================================
+  # Kibana
+  # ================================
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: library-kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - SERVER_NAME=kibana
+    networks:
+      - elk
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5601/api/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ================================
+  # Filebeat
+  # ================================
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.11.0
+    container_name: library-filebeat
+    user: root
+    volumes:
+      - ./src/main/docker/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - app_logs:/logs:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: filebeat -e -strict.perms=false
+    networks:
+      - elk
+    depends_on:
+      logstash:
+        condition: service_healthy
+
+networks:
+  app-network:
+    driver: bridge
+  elk:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  es_data:
+  app_logs:

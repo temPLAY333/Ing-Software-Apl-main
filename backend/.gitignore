@@ -151,3 +151,44 @@ Desktop.ini
 ######################
 coverage/
 .nyc_output/
+
+######################
+# Docker
+######################
+# Docker Compose override files (local development)
+docker-compose.override.yml
+
+# Environment variables (may contain secrets)
+.env
+.env.local
+.env.*.local
+
+# Docker volumes data
+.docker/
+
+######################
+# Application Logs
+######################
+logs/
+*.log
+application-*.json
+
+######################
+# Temporary files
+######################
+*.tmp
+*.temp
+.cache/
+
+######################
+# JHipster
+######################
+.jhipster/
+/src/main/webapp/app/**/*.js.map
+/src/main/webapp/app/**/*.js
+
+######################
+# Angular
+######################
+.angular/
+angular-cli.json

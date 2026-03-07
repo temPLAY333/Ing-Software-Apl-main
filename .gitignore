@@ -1,0 +1,82 @@
+# ================================
+# .gitignore - Library Project
+# Root level gitignore
+# ================================
+
+######################
+# IDE
+######################
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+
+######################
+# OS Files
+######################
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+######################
+# Logs
+######################
+logs/
+*.log
+*.log.*
+application-*.json
+
+######################
+# Build outputs
+######################
+target/
+build/
+dist/
+out/
+
+######################
+# Node
+######################
+node_modules/
+npm-debug.log.*
+yarn-error.log
+package-lock.json
+
+######################
+# Environment & Secrets
+######################
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.p12
+*.jks
+
+######################
+# Docker
+######################
+docker-compose.override.yml
+.docker/
+
+######################
+# Temporary files
+######################
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+.cache/
+
+######################
+# Coverage & Testing
+######################
+coverage/
+.nyc_output/
+test-results/
+*.lcov

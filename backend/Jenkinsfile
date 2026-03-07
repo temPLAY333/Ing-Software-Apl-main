@@ -1,0 +1,242 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven 3.9'
+        jdk 'JDK 17'
+        nodejs 'Node 18'
+    }
+
+    environment {
+        APP_NAME = 'library'
+        DOCKER_IMAGE = "library/app"
+        DOCKER_REGISTRY = credentials('docker-registry-url')
+        DOCKER_CREDENTIALS = credentials('docker-hub-credentials')
+        SONAR_TOKEN = credentials('sonar-token')
+        K8S_NAMESPACE = 'production'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo '📦 Checking out source code...'
+                checkout scm
+                sh 'git rev-parse --short HEAD > .git/commit-id'
+                script {
+                    env.GIT_COMMIT_SHORT = readFile('.git/commit-id').trim()
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo '🔨 Building application...'
+                dir('backend') {
+                    sh '''
+                        chmod +x mvnw
+                        ./mvnw clean install -DskipTests
+                    '''
+                }
+            }
+        }
+
+        stage('Unit Tests') {
+            parallel {
+                stage('Backend Tests') {
+                    steps {
+                        echo '🧪 Running backend tests...'
+                        dir('backend') {
+                            sh './mvnw test'
+                        }
+                    }
+                    post {
+                        always {
+                            junit 'backend/target/surefire-reports/**/*.xml'
+                            jacoco execPattern: 'backend/target/jacoco.exec',
+                                   classPattern: 'backend/target/classes',
+                                   sourcePattern: 'backend/src/main/java'
+                        }
+                    }
+                }
+                stage('Frontend Tests') {
+                    steps {
+                        echo '🧪 Running frontend tests...'
+                        dir('backend') {
+                            sh '''
+                                npm ci
+                                npm run test:ci
+                            '''
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Code Quality Analysis') {
+            steps {
+                echo '📊 Running SonarQube analysis...'
+                dir('backend') {
+                    withSonarQubeEnv('SonarQube') {
+                        sh './mvnw sonar:sonar -Dsonar.login=$SONAR_TOKEN'
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                echo '🚦 Checking quality gate...'
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                echo '🔒 Running security scan...'
+                dir('backend') {
+                    sh '''
+                        # OWASP Dependency Check
+                        ./mvnw org.owasp:dependency-check-maven:check
+                    '''
+                }
+            }
+            post {
+                always {
+                    publishHTML([
+                        reportDir: 'backend/target/dependency-check-report',
+                        reportFiles: 'dependency-check-report.html',
+                        reportName: 'OWASP Dependency Check'
+                    ])
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            when {
+                anyOf {
+                    branch 'main'
+                    branch 'develop'
+                }
+            }
+            steps {
+                echo '🐳 Building Docker image...'
+                dir('backend') {
+                    script {
+                        env.IMAGE_TAG = "${env.GIT_COMMIT_SHORT}"
+                        sh """
+                            docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} .
+                            docker tag ${DOCKER_IMAGE}:${IMAGE_TAG} ${DOCKER_IMAGE}:latest
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo '📤 Pushing Docker image to registry...'
+                script {
+                    sh """
+                        echo \$DOCKER_CREDENTIALS_PSW | docker login -u \$DOCKER_CREDENTIALS_USR --password-stdin
+                        docker push ${DOCKER_IMAGE}:${IMAGE_TAG}
+                        docker push ${DOCKER_IMAGE}:latest
+                    """
+                }
+            }
+        }
+
+        stage('E2E Tests') {
+            steps {
+                echo '🎭 Running E2E tests...'
+                dir('backend') {
+                    sh '''
+                        # Start database for E2E tests
+                        docker-compose -f src/main/docker/postgresql.yml up -d
+                        sleep 10
+
+                        # Run Cypress E2E tests
+                        npm run ci:e2e:run || true
+                    '''
+                }
+            }
+            post {
+                always {
+                    dir('backend') {
+                        sh 'docker-compose -f src/main/docker/postgresql.yml down'
+                    }
+                    // Publish Cypress results
+                    publishHTML([
+                        reportDir: 'backend/target/cypress/reports',
+                        reportFiles: 'index.html',
+                        reportName: 'Cypress E2E Tests'
+                    ])
+                }
+            }
+        }
+
+        stage('Deploy to K8s') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo '🚀 Deploying to Kubernetes...'
+                input message: 'Deploy to production?', ok: 'Deploy'
+                script {
+                    sh """
+                        kubectl set image deployment/${APP_NAME} \
+                            ${APP_NAME}=${DOCKER_IMAGE}:${IMAGE_TAG} \
+                            --namespace=${K8S_NAMESPACE}
+
+                        kubectl rollout status deployment/${APP_NAME} \
+                            --namespace=${K8S_NAMESPACE} \
+                            --timeout=5m
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo '🧹 Cleaning workspace...'
+            cleanWs()
+        }
+        success {
+            echo '✅ Pipeline completed successfully!'
+            // Slack notification
+            script {
+                def message = """
+                    *BUILD SUCCESS* ✅
+                    Job: ${env.JOB_NAME}
+                    Build: #${env.BUILD_NUMBER}
+                    Commit: ${env.GIT_COMMIT_SHORT}
+                    Duration: ${currentBuild.durationString}
+                """.stripIndent()
+
+                // slackSend(color: 'good', message: message, channel: '#builds')
+            }
+        }
+        failure {
+            echo '❌ Pipeline failed!'
+            script {
+                def message = """
+                    *BUILD FAILED* ❌
+                    Job: ${env.JOB_NAME}
+                    Build: #${env.BUILD_NUMBER}
+                    Commit: ${env.GIT_COMMIT_SHORT}
+                    Check: ${env.BUILD_URL}
+                """.stripIndent()
+
+                // slackSend(color: 'danger', message: message, channel: '#builds')
+            }
+        }
+        unstable {
+            echo '⚠️ Pipeline is unstable!'
+        }
+    }
+}
