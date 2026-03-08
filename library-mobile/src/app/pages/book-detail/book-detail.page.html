@@ -1,0 +1,126 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/books"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Book Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Loading spinner -->
+  <div *ngIf="loading" style="text-align: center; padding: 40px;">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Loading book details...</p>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error && !loading" style="text-align: center; padding: 40px;">
+    <ion-icon name="alert-circle-outline" size="large" color="danger"></ion-icon>
+    <h2>Error Loading Book</h2>
+    <p>Could not load book details. Please try again.</p>
+    <ion-button (click)="goBack()" color="primary">
+      <ion-icon name="arrow-back" slot="start"></ion-icon>
+      Back to Books
+    </ion-button>
+  </div>
+
+  <!-- Book details -->
+  <div *ngIf="book && !loading">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="book-outline" color="primary"></ion-icon>
+          {{ book.name }}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list lines="full">
+          <!-- ISBN -->
+          <ion-item *ngIf="book.isbn">
+            <ion-icon name="barcode-outline" slot="start" color="medium"></ion-icon>
+            <ion-label>
+              <h3>ISBN</h3>
+              <p>{{ book.isbn }}</p>
+            </ion-label>
+          </ion-item>
+
+          <!-- Publish Year -->
+          <ion-item *ngIf="book.publishYear">
+            <ion-icon name="calendar-outline" slot="start" color="medium"></ion-icon>
+            <ion-label>
+              <h3>Publication Year</h3>
+              <p>{{ book.publishYear }}</p>
+            </ion-label>
+          </ion-item>
+
+          <!-- Number of Copies -->
+          <ion-item *ngIf="book.copies !== undefined && book.copies !== null">
+            <ion-icon name="layers-outline" slot="start" color="medium"></ion-icon>
+            <ion-label>
+              <h3>Available Copies</h3>
+              <p>
+                <ion-badge [color]="book.copies > 0 ? 'success' : 'danger'">
+                  {{ book.copies }} {{ book.copies === 1 ? 'copy' : 'copies' }}
+                </ion-badge>
+              </p>
+            </ion-label>
+          </ion-item>
+
+          <!-- Authors -->
+          <ion-item *ngIf="book.authors && book.authors.length > 0">
+            <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
+            <ion-label>
+              <h3>{{ book.authors.length === 1 ? 'Author' : 'Authors' }}</h3>
+              <p>{{ getAuthorsNames() }}</p>
+            </ion-label>
+          </ion-item>
+
+          <!-- Publisher -->
+          <ion-item *ngIf="book.publisher">
+            <ion-icon name="business-outline" slot="start" color="medium"></ion-icon>
+            <ion-label>
+              <h3>Publisher</h3>
+              <p>{{ book.publisher.name }}</p>
+            </ion-label>
+          </ion-item>
+
+          <!-- Cover Image (if available) -->
+          <ion-item *ngIf="book.cover">
+            <ion-label>
+              <h3>Cover</h3>
+              <img [src]="book.cover" alt="Book cover" style="max-width: 200px; margin-top: 10px;" />
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Additional info card -->
+    <ion-card *ngIf="book.id">
+      <ion-card-header>
+        <ion-card-title>Additional Information</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-label>
+            <p><strong>Book ID:</strong> {{ book.id }}</p>
+            <p *ngIf="book.authors && book.authors.length > 0">
+              <strong>Total Authors:</strong> {{ book.authors.length }}
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!book && !loading && !error" style="text-align: center; padding: 40px;">
+    <p>No book information available.</p>
+    <ion-button (click)="goBack()" color="primary">
+      <ion-icon name="arrow-back" slot="start"></ion-icon>
+      Back to Books
+    </ion-button>
+  </div>
+</ion-content>

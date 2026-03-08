@@ -1,0 +1,7 @@
+{
+  "name": "library-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

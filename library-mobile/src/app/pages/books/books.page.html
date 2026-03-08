@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      Library Books
+      <ion-badge [color]="isOnline ? 'success' : 'warning'" style="margin-left: 10px; font-size: 0.7em;">
+        <ion-icon [name]="isOnline ? 'cloud-done-outline' : 'cloud-offline-outline'" style="vertical-align: middle;"></ion-icon>
+        {{ isOnline ? 'Online' : 'Offline' }}
+      </ion-badge>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        Logout
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Mensaje de modo offline -->
+  <div *ngIf="!isOnline" style="background-color: #ffc409; color: #000; padding: 10px; text-align: center;">
+    <ion-icon name="cloud-offline-outline"></ion-icon>
+    <strong>Modo sin conexión</strong> - Mostrando datos guardados localmente
+  </div>
+
+  <div *ngIf="loading" style="text-align: center; padding: 20px;">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading books...</p>
+  </div>
+
+  <ion-list *ngIf="!loading">
+    <ion-item *ngFor="let book of books" button (click)="onBookClick(book)">
+      <ion-icon name="book-outline" slot="start"></ion-icon>
+      <ion-label>
+        <h2>{{ book.name }}</h2>
+        <p>ISBN: {{ book.isbn }}</p>
+        <p *ngIf="book.publishYear">Year: {{ book.publishYear }}</p>
+        <p *ngIf="book.authors && book.authors.length > 0">
+          Authors: {{ getAuthorsNames(book) }}
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="!loading && books.length === 0" style="text-align: center; padding: 40px;">
+    <p>No books found.</p>
+  </div>
+</ion-content>
