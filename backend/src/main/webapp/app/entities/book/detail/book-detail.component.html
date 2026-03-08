@@ -54,7 +54,7 @@
           <dd>
             @for (author of bookRef.authors; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/author', author.id, 'view']">{{ author?.firstName }}</a
+                <a [routerLink]="['/author', author.id, 'view']">{{ author?.firstName }} {{ author?.lastName }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }

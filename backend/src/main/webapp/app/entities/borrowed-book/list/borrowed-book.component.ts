@@ -1,7 +1,7 @@
 import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
-import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
+import { Observable, Subscription, combineLatest, filter, tap, finalize } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import SharedModule from 'app/shared/shared.module';
@@ -80,6 +80,9 @@ export class BorrowedBookComponent implements OnInit {
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
       },
+      error: () => {
+        this.isLoading = false;
+      },
     });
   }
 
@@ -126,7 +129,7 @@ export class BorrowedBookComponent implements OnInit {
     filters.filterOptions.forEach(filterOption => {
       queryObject[filterOption.name] = filterOption.values;
     });
-    return this.borrowedBookService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.borrowedBookService.query(queryObject).pipe(finalize(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page: number, sortState: SortState, filterOptions?: IFilterOption[]): void {

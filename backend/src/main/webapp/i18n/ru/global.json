@@ -104,7 +104,8 @@
       "open": "Открыть",
       "save": "Сохранить",
       "view": "Просмотр",
-      "show": "Show {{otherEntity}}"
+      "show": "Show {{otherEntity}}",
+      "actions": "Действия"
     },
     "detail": {
       "field": "Поле",

@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
-import { Observable, Subscription, combineLatest, filter, tap } from 'rxjs';
+import { Observable, Subscription, combineLatest, filter, tap, finalize } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import SharedModule from 'app/shared/shared.module';
@@ -64,6 +64,9 @@ export class AuthorityComponent implements OnInit {
       next: (res: EntityArrayResponseType) => {
         this.onResponseSuccess(res);
       },
+      error: () => {
+        this.isLoading = false;
+      },
     });
   }
 
@@ -94,7 +97,7 @@ export class AuthorityComponent implements OnInit {
     const queryObject: any = {
       sort: this.sortService.buildSortParam(this.sortState()),
     };
-    return this.authorityService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.authorityService.query(queryObject).pipe(finalize(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(sortState: SortState): void {

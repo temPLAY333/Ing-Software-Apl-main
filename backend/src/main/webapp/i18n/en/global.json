@@ -128,7 +128,8 @@
       "open": "Open",
       "save": "Save",
       "view": "View",
-      "show": "Show {{otherEntity}}"
+      "show": "Show {{otherEntity}}",
+      "actions": "Actions"
     },
     "detail": {
       "field": "Field",

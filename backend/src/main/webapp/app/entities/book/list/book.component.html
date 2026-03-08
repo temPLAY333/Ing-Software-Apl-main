@@ -82,22 +82,9 @@
                         <fa-icon class="p-1" icon="sort"></fa-icon>
                       </div>
                     </th>
-                    <th scope="col" jhiSortBy="copies" class="text-center">
-                      <div class="d-flex justify-content-center align-items-center">
-                        <span jhiTranslate="libraryApp.book.copies">Copies</span>
-                        <fa-icon class="p-1" icon="sort"></fa-icon>
-                      </div>
-                    </th>
-                    <th scope="col" jhiSortBy="cover" class="text-center">
-                      <div class="d-flex justify-content-center align-items-center">
-                        <span jhiTranslate="libraryApp.book.cover">Cover</span>
-                        <fa-icon class="p-1" icon="sort"></fa-icon>
-                      </div>
-                    </th>
-                    <th scope="col" jhiSortBy="publisher.name">
+                    <th scope="col">
                       <div class="d-flex align-items-center">
-                        <span jhiTranslate="libraryApp.book.publisher">Publisher</span>
-                        <fa-icon class="p-1" icon="sort"></fa-icon>
+                        <span jhiTranslate="libraryApp.book.author">Author</span>
                       </div>
                     </th>
                     <th scope="col" class="text-end" style="width: 200px;">
@@ -125,26 +112,18 @@
                       <td class="text-center">
                         <span class="badge bg-secondary">{{ book.publishYear }}</span>
                       </td>
-                      <td class="text-center">
-                        <span class="badge bg-success">{{ book.copies }}</span>
-                      </td>
-                      <td class="text-center">
-                        @if (book.cover) {
-                          <a (click)="openFile(book.cover, book.coverContentType)" class="btn btn-sm btn-outline-info" title="View cover">
-                            <img [src]="'data:' + book.coverContentType + ';base64,' + book.cover" style="max-height: 30px; max-width: 40px;" alt="book cover" class="rounded" />
-                          </a>
+                      <td>
+                        @if (book.authors && book.authors.length > 0) {
+                          <div class="d-flex align-items-center">
+                            <fa-icon icon="user-edit" class="text-info me-2"></fa-icon>
+                            <span>
+                              @for (author of book.authors; track author.id; let last = $last) {
+                                <span>{{ author.firstName }} {{ author.lastName }}@if (!last) {, }</span>
+                              }
+                            </span>
+                          </div>
                         } @else {
                           <span class="text-muted">—</span>
-                        }
-                      </td>
-                      <td>
-                        @if (book.publisher) {
-                          <div class="d-flex align-items-center">
-                            <fa-icon icon="building" class="text-secondary me-2"></fa-icon>
-                            <a [routerLink]="['/publisher', book.publisher.id, 'view']" class="text-decoration-none">
-                              {{ book.publisher.name }}
-                            </a>
-                          </div>
                         }
                       </td>
                       <td class="text-end">

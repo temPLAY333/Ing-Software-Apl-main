@@ -39,7 +39,7 @@ public class BookRepositoryWithBagRelationshipsImpl implements BookRepositoryWit
 
     Book fetchAuthors(Book result) {
         return entityManager
-            .createQuery("select book from Book book left join fetch book.authors where book.id = :id", Book.class)
+            .createQuery("select book from Book book left join fetch book.publisher left join fetch book.authors where book.id = :id", Book.class)
             .setParameter(ID_PARAMETER, result.getId())
             .getSingleResult();
     }
@@ -48,7 +48,7 @@ public class BookRepositoryWithBagRelationshipsImpl implements BookRepositoryWit
         HashMap<Object, Integer> order = new HashMap<>();
         IntStream.range(0, books.size()).forEach(index -> order.put(books.get(index).getId(), index));
         List<Book> result = entityManager
-            .createQuery("select book from Book book left join fetch book.authors where book in :books", Book.class)
+            .createQuery("select book from Book book left join fetch book.publisher left join fetch book.authors where book in :books", Book.class)
             .setParameter(BOOKS_PARAMETER, books)
             .getResultList();
         Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));

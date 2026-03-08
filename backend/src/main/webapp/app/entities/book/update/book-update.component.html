@@ -176,7 +176,7 @@
             [compareWith]="compareAuthor"
           >
             @for (authorOption of authorsSharedCollection; track $index) {
-              <option [ngValue]="authorOption">{{ authorOption.firstName }}</option>
+              <option [ngValue]="authorOption">{{ authorOption.firstName }} {{ authorOption.lastName }}</option>
             }
           </select>
         </div>
