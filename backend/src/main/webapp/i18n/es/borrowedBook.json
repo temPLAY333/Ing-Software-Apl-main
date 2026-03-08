@@ -1,0 +1,53 @@
+{
+  "libraryApp": {
+    "borrowedBook": {
+      "home": {
+        "title": "Libros Prestados",
+        "refreshListLabel": "Actualizar lista",
+        "createLabel": "Crear un nuevo Libro Prestado",
+        "createOrEditLabel": "Crear o editar un Libro Prestado",
+        "notFound": "No se encontraron Libros Prestados"
+      },
+      "borrow": {
+        "title": "Préstamo de Libros",
+        "subtitle": "Gestiona los préstamos de libros de la biblioteca",
+        "systemTitle": "Sistema de Préstamos",
+        "newLoan": "Registrar Nuevo Préstamo",
+        "successMessage": "¡Préstamo registrado exitosamente!",
+        "errorMessage": "Error al registrar el préstamo. Intenta nuevamente.",
+        "clientLabel": "Cliente",
+        "selectClient": "Seleccionar cliente...",
+        "selectClientValidation": "Selecciona un cliente",
+        "bookLabel": "Libro",
+        "selectBook": "Seleccionar libro...",
+        "selectBookValidation": "Selecciona un libro",
+        "borrowDateLabel": "Fecha de Préstamo",
+        "registerButton": "Registrar Préstamo",
+        "availableBooks": "Libros disponibles",
+        "activeLoans": "Préstamos activos",
+        "activeLoansList": "Préstamos Activos",
+        "loading": "Cargando...",
+        "loadingLoans": "Cargando préstamos...",
+        "noActiveLoans": "No hay préstamos activos",
+        "registerFirstLoan": "Registra el primer préstamo usando el formulario",
+        "client": "Cliente",
+        "lentOn": "Prestado el",
+        "returnButton": "Devolver",
+        "copiesAvailable": "disponibles"
+      },
+      "created": "Se ha creado un nuevo Libro Prestado con identificador {{ param }}",
+      "updated": "Se ha actualizado un Libro Prestado con identificador {{ param }}",
+      "deleted": "Se ha eliminado un Libro Prestado con identificador {{ param }}",
+      "delete": {
+        "question": "¿Está seguro de que desea eliminar el Libro Prestado {{ id }}?"
+      },
+      "detail": {
+        "title": "Libro Prestado"
+      },
+      "id": "ID",
+      "borrowDate": "Fecha de Préstamo",
+      "book": "Libro",
+      "client": "Cliente"
+    }
+  }
+}

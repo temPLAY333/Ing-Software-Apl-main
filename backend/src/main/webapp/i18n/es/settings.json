@@ -1,0 +1,32 @@
+{
+  "settings": {
+    "title": "Configuración de usuario para [<strong>{{username}}</strong>]",
+    "form": {
+      "firstname": "Nombre",
+      "firstname.placeholder": "Su nombre",
+      "lastname": "Apellido",
+      "lastname.placeholder": "Su apellido",
+      "language": "Idioma",
+      "button": "Guardar"
+    },
+    "messages": {
+      "error": {
+        "fail": "<strong>¡Ha ocurrido un error!</strong> La configuración no pudo ser guardada.",
+        "emailexists": "<strong>¡El correo electrónico ya está en uso!</strong> Por favor, elija otro."
+      },
+      "success": "<strong>¡Configuración guardada!</strong>",
+      "validate": {
+        "firstname": {
+          "required": "Su nombre es obligatorio.",
+          "minlength": "Su nombre debe tener al menos 1 carácter",
+          "maxlength": "Su nombre no puede tener más de 50 caracteres"
+        },
+        "lastname": {
+          "required": "Su apellido es obligatorio.",
+          "minlength": "Su apellido debe tener al menos 1 carácter",
+          "maxlength": "Su apellido no puede tener más de 50 caracteres"
+        }
+      }
+    }
+  }
+}

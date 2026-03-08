@@ -1,0 +1,55 @@
+{
+  "libraryApp": {
+    "book": {
+      "home": {
+        "title": "Libros",
+        "refreshListLabel": "Actualizar lista",
+        "createLabel": "Crear un nuevo Libro",
+        "createOrEditLabel": "Crear o editar un Libro",
+        "notFound": "No se encontraron Libros"
+      },
+      "search": {
+        "title": "Buscar Libros",
+        "subtitle": "Encuentra el libro perfecto en nuestra biblioteca",
+        "searchTitle": "Búsqueda de Libros",
+        "filters": "Filtros",
+        "searchByName": "Buscar por nombre o ISBN",
+        "searchPlaceholder": "Ingresa nombre o ISBN...",
+        "publisherLabel": "Editorial",
+        "allPublishers": "Todas las editoriales",
+        "authorLabel": "Autor",
+        "allAuthors": "Todos los autores",
+        "publishYear": "Año de publicación",
+        "yearFrom": "Desde",
+        "yearTo": "Hasta",
+        "searchButton": "Buscar",
+        "clearButton": "Limpiar",
+        "booksFound": "Libros encontrados",
+        "loading": "Cargando...",
+        "loadingBooks": "Cargando libros...",
+        "noBooksFound": "No se encontraron libros",
+        "adjustFilters": "Intenta ajustar los filtros de búsqueda",
+        "noPublisher": "Sin editorial",
+        "copiesAvailable": "copias disponibles"
+      },
+      "created": "Se ha creado un nuevo Libro con identificador {{ param }}",
+      "updated": "Se ha actualizado un Libro con identificador {{ param }}",
+      "deleted": "Se ha eliminado un Libro con identificador {{ param }}",
+      "delete": {
+        "question": "¿Está seguro de que desea eliminar el Libro {{ id }}?"
+      },
+      "detail": {
+        "title": "Libro"
+      },
+      "id": "ID",
+      "isbn": "ISBN",
+      "name": "Nombre",
+      "publishYear": "Año de Publicación",
+      "copies": "Copias",
+      "cover": "Portada",
+      "publisher": "Editorial",
+      "author": "Autor",
+      "borrowedBook": "Libro Prestado"
+    }
+  }
+}

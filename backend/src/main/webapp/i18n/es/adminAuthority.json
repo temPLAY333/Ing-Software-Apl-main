@@ -1,0 +1,23 @@
+{
+  "libraryApp": {
+    "adminAuthority": {
+      "home": {
+        "title": "Autoridades",
+        "refreshListLabel": "Actualizar lista",
+        "createLabel": "Crear una nueva Autoridad",
+        "createOrEditLabel": "Crear o editar una Autoridad",
+        "notFound": "No se encontraron Autoridades"
+      },
+      "created": "Se ha creado una nueva Autoridad con identificador {{ param }}",
+      "updated": "Se ha actualizado una Autoridad con identificador {{ param }}",
+      "deleted": "Se ha eliminado una Autoridad con identificador {{ param }}",
+      "delete": {
+        "question": "¿Está seguro de que desea eliminar la Autoridad {{ id }}?"
+      },
+      "detail": {
+        "title": "Autoridad"
+      },
+      "name": "Nombre"
+    }
+  }
+}

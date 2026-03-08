@@ -1,0 +1,25 @@
+{
+  "libraryApp": {
+    "publisher": {
+      "home": {
+        "title": "Editoriales",
+        "refreshListLabel": "Actualizar lista",
+        "createLabel": "Crear una nueva Editorial",
+        "createOrEditLabel": "Crear o editar una Editorial",
+        "notFound": "No se encontraron Editoriales"
+      },
+      "created": "Se ha creado una nueva Editorial con identificador {{ param }}",
+      "updated": "Se ha actualizado una Editorial con identificador {{ param }}",
+      "deleted": "Se ha eliminado una Editorial con identificador {{ param }}",
+      "delete": {
+        "question": "¿Está seguro de que desea eliminar la Editorial {{ id }}?"
+      },
+      "detail": {
+        "title": "Editorial"
+      },
+      "id": "ID",
+      "name": "Nombre",
+      "book": "Libro"
+    }
+  }
+}

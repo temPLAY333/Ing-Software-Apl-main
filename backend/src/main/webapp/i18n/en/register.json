@@ -1,6 +1,7 @@
 {
   "register": {
     "title": "Registration",
+    "subtitle": "Create a new account in the Library System",
     "form": {
       "button": "Register"
     },

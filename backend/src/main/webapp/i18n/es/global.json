@@ -1,0 +1,177 @@
+{
+  "global": {
+    "title": "Biblioteca",
+    "browsehappy": "Está usando un navegador <strong>obsoleto</strong>. Por favor <a href=\"http://browsehappy.com/?locale=es\">actualice su navegador</a> para mejorar su experiencia.",
+    "menu": {
+      "home": "Inicio",
+      "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+      "entities": {
+        "main": "Entidades",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "adminAuthority": "Autoridad",
+        "publisher": "Editorial",
+        "author": "Autor",
+        "client": "Cliente",
+        "book": "Libro",
+        "borrowedBook": "Libro Prestado"
+      },
+      "account": {
+        "main": "Cuenta",
+        "settings": "Configuración",
+        "password": "Contraseña",
+        "sessions": "Sesiones",
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión",
+        "register": "Registrarse"
+      },
+      "admin": {
+        "main": "Administración",
+        "userManagement": "Gestión de usuarios",
+        "tracker": "Rastreador de usuarios",
+        "metrics": "Métricas",
+        "health": "Salud",
+        "configuration": "Configuración",
+        "logs": "Registros",
+        "apidocs": "API",
+        "database": "Base de datos",
+        "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+      },
+      "language": "Idioma"
+    },
+    "form": {
+      "username.label": "Usuario",
+      "username.placeholder": "Su usuario",
+      "currentpassword.label": "Contraseña actual",
+      "currentpassword.placeholder": "Contraseña actual",
+      "newpassword.label": "Nueva contraseña",
+      "newpassword.placeholder": "Nueva contraseña",
+      "confirmpassword.label": "Confirmación de nueva contraseña",
+      "confirmpassword.placeholder": "Confirme la nueva contraseña",
+      "email.label": "Correo electrónico",
+      "email.placeholder": "Su correo electrónico"
+    },
+    "messages": {
+      "info": {
+        "authenticated": {
+          "prefix": "Si desea ",
+          "link": "iniciar sesión",
+          "suffix": ", puede probar las cuentas predeterminadas:<br/>- Administrador (usuario=\"admin\" y contraseña=\"admin\") <br/>- Usuario (usuario=\"user\" y contraseña=\"user\")."
+        },
+        "register": {
+          "noaccount": "¿Aún no tiene una cuenta?",
+          "link": "Registre una nueva cuenta"
+        }
+      },
+      "error": {
+        "dontmatch": "¡La contraseña y su confirmación no coinciden!"
+      },
+      "validate": {
+        "newpassword": {
+          "required": "Su contraseña es obligatoria.",
+          "minlength": "Su contraseña debe tener al menos 4 caracteres.",
+          "maxlength": "Su contraseña no puede tener más de 50 caracteres.",
+          "strength": "Fortaleza de la contraseña:"
+        },
+        "confirmpassword": {
+          "required": "La confirmación de su contraseña es obligatoria.",
+          "minlength": "La confirmación de su contraseña debe tener al menos 4 caracteres.",
+          "maxlength": "La confirmación de su contraseña no puede tener más de 50 caracteres."
+        },
+        "email": {
+          "required": "Su correo electrónico es obligatorio.",
+          "invalid": "Su correo electrónico no es válido.",
+          "minlength": "Su correo electrónico debe tener al menos 5 caracteres.",
+          "maxlength": "Su correo electrónico no puede tener más de 50 caracteres."
+        }
+      }
+    },
+    "field": {
+      "id": "ID"
+    },
+    "ribbon": {
+      "dev": "Desarrollo"
+    },
+    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos.",
+    "home": {
+      "title": "Sistema de Gestión de Biblioteca",
+      "subtitle": "Administra libros, autores, editoriales y préstamos de manera eficiente",
+      "quickActions": "Acciones Rápidas",
+      "manageEntities": "Gestionar Entidades",
+      "searchBooks": "Buscar Libros",
+      "searchBooksDesc": "Explora el catálogo completo",
+      "borrowBooks": "Préstamos",
+      "borrowBooksDesc": "Gestiona préstamos de libros",
+      "addBook": "Agregar Libro",
+      "addBookDesc": "Registra un nuevo libro",
+      "newClient": "Nuevo Cliente",
+      "newClientDesc": "Registra un nuevo cliente",
+      "addAuthor": "Agregar Autor",
+      "addAuthorDesc": "Registra un nuevo autor",
+      "newPublisher": "Nueva Editorial",
+      "newPublisherDesc": "Registra una editorial",
+      "booksEntity": "Libros",
+      "authorsEntity": "Autores",
+      "publishersEntity": "Editoriales",
+      "clientsEntity": "Clientes",
+      "borrowedBooksEntity": "Libros Prestados",
+      "accessSystemDesc": "Accede al sistema de biblioteca para gestionar libros y préstamos"
+    }
+  },
+  "entity": {
+    "action": {
+      "addblob": "Agregar blob",
+      "addimage": "Agregar imagen",
+      "back": "Volver",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "edit": "Editar",
+      "open": "Abrir",
+      "save": "Guardar",
+      "view": "Ver",
+      "show": "Mostrar {{otherEntity}}",
+      "actions": "Acciones"
+    },
+    "detail": {
+      "field": "Campo",
+      "value": "Valor"
+    },
+    "delete": {
+      "title": "Confirmar operación de eliminación"
+    },
+    "validation": {
+      "required": "Este campo es obligatorio.",
+      "minlength": "Este campo debe tener al menos {{ min }} caracteres.",
+      "maxlength": "Este campo no puede tener más de {{ max }} caracteres.",
+      "min": "Este campo debe ser al menos {{ min }}.",
+      "max": "Este campo no puede ser más de {{ max }}.",
+      "minbytes": "Este campo debe tener al menos {{ min }} bytes.",
+      "maxbytes": "Este campo no puede tener más de {{ max }} bytes.",
+      "pattern": "Este campo debe seguir el patrón {{ pattern }}.",
+      "number": "Este campo debe ser un número.",
+      "datetimelocal": "Este campo debe ser una fecha y hora.",
+      "patternLogin": "Este campo solo puede contener letras, dígitos y direcciones de correo electrónico."
+    },
+    "filters": {
+      "set": "Se han establecido los siguientes filtros",
+      "clear": "Limpiar filtro",
+      "clearAll": "Limpiar todos los filtros"
+    }
+  },
+  "error": {
+    "internalServerError": "Error interno del servidor",
+    "server.not.reachable": "Servidor no accesible",
+    "url.not.found": "No encontrado",
+    "NotNull": "¡El campo {{ fieldName }} no puede estar vacío!",
+    "Size": "¡El campo {{ fieldName }} no cumple con los requisitos de tamaño mínimo/máximo!",
+    "userexists": "¡El nombre de usuario ya está en uso!",
+    "emailexists": "¡El correo electrónico ya está en uso!",
+    "idexists": "Un nuevo {{ entityName }} no puede tener ya un ID",
+    "idnull": "ID inválido",
+    "idinvalid": "ID inválido",
+    "idnotfound": "No se puede encontrar el ID",
+    "file": {
+      "could.not.extract": "No se pudo extraer el archivo",
+      "not.image": "Se esperaba que el archivo fuera una imagen, pero se encontró que era \"{{ fileType }}\""
+    }
+  }
+}

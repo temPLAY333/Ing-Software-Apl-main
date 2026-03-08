@@ -1,6 +1,7 @@
 {
   "login": {
     "title": "Sign in",
+    "subtitle": "Welcome to the Library System",
     "form": {
       "password": "Password",
       "password.placeholder": "Your password",

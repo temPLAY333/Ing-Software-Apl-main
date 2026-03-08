@@ -1,0 +1,20 @@
+{
+  "login": {
+    "title": "Iniciar sesión",
+    "subtitle": "Bienvenido al Sistema de Biblioteca",
+    "form": {
+      "password": "Contraseña",
+      "password.placeholder": "Su contraseña",
+      "rememberme": "Recordarme",
+      "button": "Iniciar sesión"
+    },
+    "messages": {
+      "error": {
+        "authentication": "<strong>¡Error al iniciar sesión!</strong> Por favor, verifique sus credenciales e intente nuevamente."
+      }
+    },
+    "password": {
+      "forgot": "¿Olvidó su contraseña?"
+    }
+  }
+}

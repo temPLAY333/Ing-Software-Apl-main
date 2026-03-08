@@ -5,10 +5,10 @@
       <div class="hero-icon">
         <i class="bi bi-book-half"></i>
       </div>
-      <h1 class="hero-title">
+      <h1 class="hero-title" jhiTranslate="global.home.title">
         Sistema de Gestión de Biblioteca
       </h1>
-      <p class="hero-subtitle">
+      <p class="hero-subtitle" jhiTranslate="global.home.subtitle">
         Administra libros, autores, editoriales y préstamos de manera eficiente
       </p>
     </div>
@@ -30,7 +30,7 @@
     <div class="quick-actions">
       <h2 class="section-title">
         <i class="bi bi-lightning me-2"></i>
-        Acciones Rápidas
+        <span jhiTranslate="global.home.quickActions">Acciones Rápidas</span>
       </h2>
 
       <div class="actions-grid">
@@ -38,48 +38,48 @@
           <div class="card-icon search">
             <i class="bi bi-search"></i>
           </div>
-          <h3>Buscar Libros</h3>
-          <p>Explora el catálogo completo</p>
+          <h3 jhiTranslate="global.home.searchBooks">Buscar Libros</h3>
+          <p jhiTranslate="global.home.searchBooksDesc">Explora el catálogo completo</p>
         </a>
 
         <a routerLink="/borrowed-book/borrow" class="action-card">
           <div class="card-icon borrow">
             <i class="bi bi-arrow-left-right"></i>
           </div>
-          <h3>Préstamos</h3>
-          <p>Gestiona préstamos de libros</p>
+          <h3 jhiTranslate="global.home.borrowBooks">Préstamos</h3>
+          <p jhiTranslate="global.home.borrowBooksDesc">Gestiona préstamos de libros</p>
         </a>
 
         <a routerLink="/book/new" class="action-card">
           <div class="card-icon add">
             <i class="bi bi-plus-circle"></i>
           </div>
-          <h3>Agregar Libro</h3>
-          <p>Registra un nuevo libro</p>
+          <h3 jhiTranslate="global.home.addBook">Agregar Libro</h3>
+          <p jhiTranslate="global.home.addBookDesc">Registra un nuevo libro</p>
         </a>
 
         <a routerLink="/client/new" class="action-card">
           <div class="card-icon client">
             <i class="bi bi-person-plus"></i>
           </div>
-          <h3>Nuevo Cliente</h3>
-          <p>Registra un nuevo cliente</p>
+          <h3 jhiTranslate="global.home.newClient">Nuevo Cliente</h3>
+          <p jhiTranslate="global.home.newClientDesc">Registra un nuevo cliente</p>
         </a>
 
         <a routerLink="/author/new" class="action-card">
           <div class="card-icon author">
             <i class="bi bi-pen"></i>
           </div>
-          <h3>Agregar Autor</h3>
-          <p>Registra un nuevo autor</p>
+          <h3 jhiTranslate="global.home.addAuthor">Agregar Autor</h3>
+          <p jhiTranslate="global.home.addAuthorDesc">Registra un nuevo autor</p>
         </a>
 
         <a routerLink="/publisher/new" class="action-card">
           <div class="card-icon publisher">
             <i class="bi bi-building"></i>
           </div>
-          <h3>Nueva Editorial</h3>
-          <p>Registra una editorial</p>
+          <h3 jhiTranslate="global.home.newPublisher">Nueva Editorial</h3>
+          <p jhiTranslate="global.home.newPublisherDesc">Registra una editorial</p>
         </a>
       </div>
     </div>
@@ -88,29 +88,29 @@
     <div class="entities-section">
       <h2 class="section-title">
         <i class="bi bi-grid me-2"></i>
-        Gestionar Entidades
+        <span jhiTranslate="global.home.manageEntities">Gestionar Entidades</span>
       </h2>
 
       <div class="entities-grid">
         <a routerLink="/book" class="entity-card">
           <i class="bi bi-book"></i>
-          <span>Libros</span>
+          <span jhiTranslate="global.home.booksEntity">Libros</span>
         </a>
         <a routerLink="/author" class="entity-card">
           <i class="bi bi-people"></i>
-          <span>Autores</span>
+          <span jhiTranslate="global.home.authorsEntity">Autores</span>
         </a>
         <a routerLink="/publisher" class="entity-card">
           <i class="bi bi-building"></i>
-          <span>Editoriales</span>
+          <span jhiTranslate="global.home.publishersEntity">Editoriales</span>
         </a>
         <a routerLink="/client" class="entity-card">
           <i class="bi bi-person-badge"></i>
-          <span>Clientes</span>
+          <span jhiTranslate="global.home.clientsEntity">Clientes</span>
         </a>
         <a routerLink="/borrowed-book" class="entity-card">
           <i class="bi bi-bookmark-check"></i>
-          <span>Préstamos</span>
+          <span jhiTranslate="global.home.borrowedBooksEntity">Préstamos</span>
         </a>
       </div>
     </div>
@@ -118,18 +118,18 @@
     <div class="guest-section">
       <div class="guest-card">
         <i class="bi bi-box-arrow-in-right"></i>
-        <h3>Inicia Sesión</h3>
-        <p>Accede al sistema de biblioteca para gestionar libros y préstamos</p>
+        <h3 jhiTranslate="global.menu.account.login">Inicia Sesión</h3>
+        <p jhiTranslate="global.home.accessSystemDesc">Accede al sistema de biblioteca para gestionar libros y préstamos</p>
         <button class="btn btn-primary btn-large" (click)="login()">
           <i class="bi bi-box-arrow-in-right me-2"></i>
-          Iniciar Sesión
+          <span jhiTranslate="global.menu.account.login">Iniciar Sesión</span>
         </button>
         <div class="divider">
           <span>o</span>
         </div>
         <a routerLink="/account/register" class="btn btn-secondary btn-large">
           <i class="bi bi-person-plus me-2"></i>
-          Registrarse
+          <span jhiTranslate="global.menu.account.register">Registrarse</span>
         </a>
       </div>
     </div>

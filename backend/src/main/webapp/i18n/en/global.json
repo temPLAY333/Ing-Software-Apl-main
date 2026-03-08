@@ -91,7 +91,31 @@
     "ribbon": {
       "dev": "Development"
     },
-    "item-count": "Showing {{first}} - {{second}} of {{total}} items."
+    "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
+    "home": {
+      "title": "Library Management System",
+      "subtitle": "Efficiently manage books, authors, publishers and loans",
+      "quickActions": "Quick Actions",
+      "manageEntities": "Manage Entities",
+      "searchBooks": "Search Books",
+      "searchBooksDesc": "Explore the complete catalog",
+      "borrowBooks": "Loans",
+      "borrowBooksDesc": "Manage book loans",
+      "addBook": "Add Book",
+      "addBookDesc": "Register a new book",
+      "newClient": "New Client",
+      "newClientDesc": "Register a new client",
+      "addAuthor": "Add Author",
+      "addAuthorDesc": "Register a new author",
+      "newPublisher": "New Publisher",
+      "newPublisherDesc": "Register a publisher",
+      "booksEntity": "Books",
+      "authorsEntity": "Authors",
+      "publishersEntity": "Publishers",
+      "clientsEntity": "Clients",
+      "borrowedBooksEntity": "Loans",
+      "accessSystemDesc": "Access the library system to manage books and loans"
+    }
   },
   "entity": {
     "action": {

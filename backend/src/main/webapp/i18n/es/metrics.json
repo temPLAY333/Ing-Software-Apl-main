@@ -1,0 +1,86 @@
+{
+  "metrics": {
+    "title": "Métricas de Aplicación",
+    "refresh.button": "Actualizar",
+    "updating": "Actualizando...",
+    "jvm": {
+      "title": "Métricas de JVM",
+      "memory": {
+        "title": "Memoria",
+        "total": "Memoria Total",
+        "heap": "Memoria Heap",
+        "nonheap": "Memoria No-Heap"
+      },
+      "threads": {
+        "title": "Hilos",
+        "all": "Todos",
+        "runnable": "Ejecutable",
+        "timedwaiting": "Espera temporizada",
+        "waiting": "Esperando",
+        "blocked": "Bloqueado",
+        "dump": {
+          "title": "Volcado de hilos",
+          "id": "Id: ",
+          "blockedtime": "Tiempo bloqueado",
+          "blockedcount": "Conteo de bloqueos",
+          "waitedtime": "Tiempo de espera",
+          "waitedcount": "Conteo de esperas",
+          "lockname": "Nombre del bloqueo",
+          "stacktrace": "Traza de pila",
+          "show": "Mostrar traza de pila",
+          "hide": "Ocultar traza de pila"
+        }
+      },
+      "gc": {
+        "title": "Recolecciones de basura",
+        "marksweepcount": "Conteo Mark Sweep",
+        "marksweeptime": "Tiempo Mark Sweep",
+        "scavengecount": "Conteo Scavenge",
+        "scavengetime": "Tiempo Scavenge"
+      },
+      "http": {
+        "title": "Solicitudes HTTP (tiempo en milisegundos)",
+        "active": "Solicitudes activas:",
+        "total": "Solicitudes totales:",
+        "table": {
+          "code": "Código",
+          "count": "Conteo",
+          "mean": "Media",
+          "average": "Promedio",
+          "max": "Máximo"
+        }
+      }
+    },
+    "servicesstats": {
+      "title": "Estadísticas de servicios (tiempo en milisegundos)",
+      "table": {
+        "name": "Nombre del servicio",
+        "count": "Conteo",
+        "mean": "Media",
+        "min": "Mínimo",
+        "max": "Máximo"
+      }
+    },
+    "cache": {
+      "title": "Estadísticas de caché",
+      "cachename": "Nombre de caché",
+      "hits": "Aciertos",
+      "misses": "Fallos",
+      "gets": "Consultas",
+      "puts": "Inserciones",
+      "removals": "Eliminaciones",
+      "evictions": "Expulsiones",
+      "hitPercent": "% de aciertos",
+      "missPercent": "% de fallos"
+    },
+    "datasource": {
+      "usage": "Uso de pool de conexiones",
+      "title": "Estado de DataSource",
+      "name": "Nombre del pool",
+      "active": "Activas",
+      "min": "Mínimo de conexiones",
+      "max": "Máximo de conexiones",
+      "idle": "Inactivas"
+    }
+  }
+}

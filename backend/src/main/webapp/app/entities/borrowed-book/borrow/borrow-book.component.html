@@ -2,9 +2,9 @@
   <div class="borrow-header">
     <h1>
       <i class="bi bi-arrow-left-right me-3"></i>
-      Sistema de Préstamos
+      <span jhiTranslate="libraryApp.borrowedBook.borrow.systemTitle">Sistema de Préstamos</span>
     </h1>
-    <p class="subtitle">Gestiona los préstamos de libros de la biblioteca</p>
+    <p class="subtitle" jhiTranslate="libraryApp.borrowedBook.borrow.subtitle">Gestiona los préstamos de libros de la biblioteca</p>
   </div>
 
   <div class="row">
@@ -13,20 +13,20 @@
       <div class="borrow-form-card">
         <h4>
           <i class="bi bi-plus-circle me-2"></i>
-          Registrar Nuevo Préstamo
+          <span jhiTranslate="libraryApp.borrowedBook.borrow.newLoan">Registrar Nuevo Préstamo</span>
         </h4>
 
         @if (success()) {
           <div class="alert alert-success">
             <i class="bi bi-check-circle me-2"></i>
-            ¡Préstamo registrado exitosamente!
+            <span jhiTranslate="libraryApp.borrowedBook.borrow.successMessage">¡Préstamo registrado exitosamente!</span>
           </div>
         }
 
         @if (error()) {
           <div class="alert alert-danger">
             <i class="bi bi-x-circle me-2"></i>
-            Error al registrar el préstamo. Intenta nuevamente.
+            <span jhiTranslate="libraryApp.borrowedBook.borrow.errorMessage">Error al registrar el préstamo. Intenta nuevamente.</span>
           </div>
         }
 
@@ -34,10 +34,10 @@
           <div class="form-group">
             <label for="clientId" class="form-label">
               <i class="bi bi-person me-2"></i>
-              Cliente
+              <span jhiTranslate="libraryApp.borrowedBook.borrow.clientLabel">Cliente</span>
             </label>
             <select id="clientId" class="form-select" formControlName="clientId">
-              <option value="">Seleccionar cliente...</option>
+              <option value="" jhiTranslate="libraryApp.borrowedBook.borrow.selectClient">Seleccionar cliente...</option>
               @for (client of clients(); track client.id) {
                 <option [value]="client.id">
                   {{ client.firstName }} {{ client.lastName }} - {{ client.email }}
@@ -45,32 +45,32 @@
               }
             </select>
             @if (borrowForm.get('clientId')?.invalid && borrowForm.get('clientId')?.touched) {
-              <small class="text-danger">Selecciona un cliente</small>
+              <small class="text-danger" jhiTranslate="libraryApp.borrowedBook.borrow.selectClientValidation">Selecciona un cliente</small>
             }
           </div>
 
           <div class="form-group">
             <label for="bookId" class="form-label">
               <i class="bi bi-book me-2"></i>
-              Libro
+              <span jhiTranslate="libraryApp.borrowedBook.borrow.bookLabel">Libro</span>
             </label>
             <select id="bookId" class="form-select" formControlName="bookId">
-              <option value="">Seleccionar libro...</option>
+              <option value="" jhiTranslate="libraryApp.borrowedBook.borrow.selectBook">Seleccionar libro...</option>
               @for (book of availableBooks(); track book.id) {
                 <option [value]="book.id">
-                  {{ book.name }} ({{ book.copies }} disponibles)
+                  {{ book.name }} ({{ book.copies }} <span jhiTranslate="libraryApp.borrowedBook.borrow.copiesAvailable">disponibles</span>)
                 </option>
               }
             </select>
             @if (borrowForm.get('bookId')?.invalid && borrowForm.get('bookId')?.touched) {
-              <small class="text-danger">Selecciona un libro</small>
+              <small class="text-danger" jhiTranslate="libraryApp.borrowedBook.borrow.selectBookValidation">Selecciona un libro</small>
             }
           </div>
 
           <div class="form-group">
             <label for="borrowDate" class="form-label">
               <i class="bi bi-calendar-event me-2"></i>
-              Fecha de Préstamo
+              <span jhiTranslate="libraryApp.borrowedBook.borrow.borrowDateLabel">Fecha de Préstamo</span>
             </label>
             <input
               type="date"
@@ -86,7 +86,7 @@
             [disabled]="borrowForm.invalid"
           >
             <i class="bi bi-check-lg me-2"></i>
-            Registrar Préstamo
+            <span jhiTranslate="libraryApp.borrowedBook.borrow.registerButton">Registrar Préstamo</span>
           </button>
         </form>
 
@@ -95,14 +95,14 @@
             <i class="bi bi-book-half"></i>
             <div>
               <div class="stat-value">{{ availableBooks().length }}</div>
-              <div class="stat-label">Libros disponibles</div>
+              <div class="stat-label" jhiTranslate="libraryApp.borrowedBook.borrow.availableBooks">Libros disponibles</div>
             </div>
           </div>
           <div class="stat-box">
             <i class="bi bi-bookmark-check"></i>
             <div>
               <div class="stat-value">{{ borrowedBooks().length }}</div>
-              <div class="stat-label">Préstamos activos</div>
+              <div class="stat-label" jhiTranslate="libraryApp.borrowedBook.borrow.activeLoans">Préstamos activos</div>
             </div>
           </div>
         </div>
@@ -114,21 +114,21 @@
       <div class="borrowed-books-list">
         <h4>
           <i class="bi bi-list-check me-2"></i>
-          Préstamos Activos
+          <span jhiTranslate="libraryApp.borrowedBook.borrow.activeLoansList">Préstamos Activos</span>
         </h4>
 
         @if (isLoading()) {
           <div class="loading-spinner">
             <div class="spinner-border text-success" role="status">
-              <span class="visually-hidden">Cargando...</span>
+              <span class="visually-hidden" jhiTranslate="libraryApp.borrowedBook.borrow.loading">Cargando...</span>
             </div>
-            <p>Cargando préstamos...</p>
+            <p jhiTranslate="libraryApp.borrowedBook.borrow.loadingLoans">Cargando préstamos...</p>
           </div>
         } @else if (borrowedBooks().length === 0) {
           <div class="no-results">
             <i class="bi bi-inbox"></i>
-            <h5>No hay préstamos activos</h5>
-            <p>Registra el primer préstamo usando el formulario</p>
+            <h5 jhiTranslate="libraryApp.borrowedBook.borrow.noActiveLoans">No hay préstamos activos</h5>
+            <p jhiTranslate="libraryApp.borrowedBook.borrow.registerFirstLoan">Registra el primer préstamo usando el formulario</p>
           </div>
         } @else {
           <div class="borrowed-list">
@@ -145,7 +145,7 @@
                   <div class="client-details">
                     <p>
                       <i class="bi bi-person me-2"></i>
-                      <strong>Cliente:</strong>
+                      <strong jhiTranslate="libraryApp.borrowedBook.borrow.client">Cliente:</strong>
                       {{ borrowedBook.client?.firstName }} {{ borrowedBook.client?.lastName }}
                     </p>
                     <p>
@@ -155,7 +155,7 @@
                   </div>
                   <div class="borrow-date">
                     <i class="bi bi-calendar3 me-2"></i>
-                    <span>Prestado el: {{ borrowedBook.borrowDate?.toDate() | date: 'dd/MM/yyyy' }}</span>
+                    <span jhiTranslate="libraryApp.borrowedBook.borrow.lentOn">Prestado el:</span> {{ borrowedBook.borrowDate?.toDate() | date: 'dd/MM/yyyy' }}
                   </div>
                 </div>
                 <div class="borrowed-actions">
@@ -165,7 +165,7 @@
                     (click)="returnBook(borrowedBook)"
                   >
                     <i class="bi bi-arrow-return-left me-2"></i>
-                    Devolver
+                    <span jhiTranslate="libraryApp.borrowedBook.borrow.returnButton">Devolver</span>
                   </button>
                 </div>
               </div>

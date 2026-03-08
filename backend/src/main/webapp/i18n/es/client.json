@@ -1,0 +1,29 @@
+{
+  "libraryApp": {
+    "client": {
+      "home": {
+        "title": "Clientes",
+        "refreshListLabel": "Actualizar lista",
+        "createLabel": "Crear un nuevo Cliente",
+        "createOrEditLabel": "Crear o editar un Cliente",
+        "notFound": "No se encontraron Clientes"
+      },
+      "created": "Se ha creado un nuevo Cliente con identificador {{ param }}",
+      "updated": "Se ha actualizado un Cliente con identificador {{ param }}",
+      "deleted": "Se ha eliminado un Cliente con identificador {{ param }}",
+      "delete": {
+        "question": "¿Está seguro de que desea eliminar el Cliente {{ id }}?"
+      },
+      "detail": {
+        "title": "Cliente"
+      },
+      "id": "ID",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo Electrónico",
+      "address": "Dirección",
+      "phone": "Teléfono",
+      "borrowedBook": "Libro Prestado"
+    }
+  }
+}
