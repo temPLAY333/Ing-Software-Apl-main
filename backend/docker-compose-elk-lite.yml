@@ -1,12 +1,14 @@
 # ================================
-# Docker Compose - Full Stack with ELK
-# Application + PostgreSQL + ELK Stack
+# Docker Compose - ELK ULTRA LITE VERSION
+# ELK Stack ULTRA OPTIMIZADO para laptop
+# Consumo: ~1GB RAM, ~120-150% CPU
+# Más lento pero consume menos recursos
 # ================================
 version: '3.8'
 
 services:
   # ================================
-  # Application
+  # Application (Optimizada)
   # ================================
   app:
     image: library-app:latest
@@ -22,9 +24,10 @@ services:
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgresql:5432/library
       - SPRING_MAIL_HOST=maildev
       - SPRING_MAIL_PORT=1025
-      - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
+      - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=false
       - ENVIRONMENT=production
-      - JAVA_OPTS=-Xmx512m -Xms256m
+      # REDUCIDO: 256MB en lugar de 512MB
+      - JAVA_OPTS=-Xmx256m -Xms128m
     ports:
       - "8080:8080"
     volumes:
@@ -37,17 +40,20 @@ services:
         condition: service_healthy
       logstash:
         condition: service_healthy
-      maildev:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/management/health"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 384M
 
   # ================================
-  # PostgreSQL Database
+  # PostgreSQL Database (Alpine = más ligero)
   # ================================
   postgresql:
     image: postgres:16.2-alpine
@@ -57,6 +63,12 @@ services:
       - POSTGRES_USER=library
       - POSTGRES_PASSWORD=library
       - POSTGRES_HOST_AUTH_METHOD=trust
+    command:
+      - postgres
+      - -c
+      - shared_buffers=64MB
+      - -c
+      - max_connections=30
     ports:
       - "5432:5432"
     volumes:
@@ -68,21 +80,44 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
 
   # ================================
-  # Elasticsearch
+  # Elasticsearch (ULTRA REDUCIDO: 192MB)
   # ================================
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
     container_name: library-elasticsearch
     environment:
       - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      # ULTRA REDUCIDO: 192MB (mínimo funcional)
+      - "ES_JAVA_OPTS=-Xms192m -Xmx192m"
       - xpack.security.enabled=false
-      - xpack.monitoring.collection.enabled=true
+      - xpack.monitoring.collection.enabled=false
+      # Desactivar features no esenciales
+      - xpack.ml.enabled=false
+      - xpack.graph.enabled=false
+      - xpack.watcher.enabled=false
+      - xpack.reporting.enabled=false
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      # OPTIMIZACIONES DE RENDIMIENTO (más lento, menos recursos)
+      - indices.memory.index_buffer_size=10%
+      - thread_pool.write.queue_size=200
+      - thread_pool.search.queue_size=500
+      # Refresh cada 30s en lugar de 1s (mucho menos CPU)
+      - index.refresh_interval=30s
+      # Reducir shards y replicas
+      - index.number_of_shards=1
+      - index.number_of_replicas=0
+      # Translog menos frecuente
+      - index.translog.durability=async
+      - index.translog.sync_interval=30s
     ports:
       - "9200:9200"
-      - "9300:9300"
     volumes:
       - es_data:/usr/share/elasticsearch/data
     networks:
@@ -92,9 +127,16 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 256M
+        reservations:
+          memory: 192M
 
   # ================================
-  # Logstash
+  # Logstash (ULTRA REDUCIDO: 96MB)
   # ================================
   logstash:
     image: docker.elastic.co/logstash/logstash:8.11.0
@@ -106,7 +148,14 @@ services:
       - "5000:5000"
       - "9600:9600"
     environment:
-      - "LS_JAVA_OPTS=-Xmx256m -Xms256m"
+      # ULTRA REDUCIDO: 96MB (mínimo funcional)
+      - "LS_JAVA_OPTS=-Xmx96m -Xms96m"
+      # OPTIMIZACIONES: Procesa en lotes más grandes pero menos frecuentes
+      - PIPELINE_WORKERS=1
+      - PIPELINE_BATCH_SIZE=125
+      - PIPELINE_BATCH_DELAY=50
+      # Reducir uso de CPU
+      - LOG_LEVEL=error
     networks:
       - elk
     depends_on:
@@ -117,9 +166,16 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 192M
+        reservations:
+          memory: 96M
 
   # ================================
-  # Kibana
+  # Kibana (ULTRA OPTIMIZADO)
   # ================================
   kibana:
     image: docker.elastic.co/kibana/kibana:8.11.0
@@ -130,8 +186,20 @@ services:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
       - SERVER_NAME=kibana
       - XPACK_SECURITY_ENABLED=false
-      - XPACK_FLEET_ENABLED=true
-      - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=a7a6311933d3503b89bc2dbc36572c33a6c10925682e591bffcab6911c06786d
+      - XPACK_FLEET_ENABLED=false
+      - XPACK_REPORTING_ENABLED=false
+      - XPACK_ML_ENABLED=false
+      - XPACK_GRAPH_ENABLED=false
+      - XPACK_APM_ENABLED=false
+      - XPACK_INFRA_ENABLED=false
+      # Reducir recursos de Kibana al máximo
+      - SERVER_MAXPAYLOADBYTES=1048576
+      - LOGGING_QUIET=true
+      - ELASTICSEARCH_REQUESTTIMEOUT=60000
+      - ELASTICSEARCH_PINGTIMEOUT=30000
+      # Polling menos frecuente (refresca cada 10s en lugar de 5s)
+      - KIBANA_DEFAULTAPPID=discover
+      - MONITORING_KIBANA_COLLECTION_ENABLED=false
     networks:
       - elk
     depends_on:
@@ -142,35 +210,23 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.4'
+          memory: 448M
+        reservations:
+          memory: 320M
 
   # ================================
-  # Filebeat
-  # ================================
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:8.11.0
-    container_name: library-filebeat
-    user: root
-    volumes:
-      - ./src/main/docker/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - app_logs:/logs:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    command: filebeat -e -strict.perms=false
-    networks:
-      - elk
-    depends_on:
-      logstash:
-        condition: service_healthy
-
-  # ================================
-  # MailDev - Email Testing
+  # MailDev (Opcional - comentar si quieres ahorrar ~50MB)
   # ================================
   maildev:
     image: maildev/maildev:latest
     container_name: library-maildev
     ports:
-      - "1080:1080" # Web UI
-      - "1025:1025" # SMTP server
+      - "1080:1080"
+      - "1025:1025"
     environment:
       - MAILDEV_WEB_PORT=1080
       - MAILDEV_SMTP_PORT=1025
@@ -181,6 +237,11 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 64M
 
 networks:
   app-network:

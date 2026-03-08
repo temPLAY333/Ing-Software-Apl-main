@@ -75,7 +75,7 @@ public class BookQueryService extends QueryService<Book> {
                 buildRangeSpecification(criteria.getCopies(), Book_.copies),
                 buildSpecification(criteria.getPublisherId(), root -> root.join(Book_.publisher, JoinType.LEFT).get(Publisher_.id)),
                 buildSpecification(criteria.getAuthorId(), root -> root.join(Book_.authors, JoinType.LEFT).get(Author_.id)),
-                buildSpecification(criteria.getBorrowedBookId(), root -> root.join(Book_.borrowedBook, JoinType.LEFT).get(BorrowedBook_.id))
+                buildSpecification(criteria.getBorrowedBookId(), root -> root.join(Book_.borrowedBooks, JoinType.LEFT).get(BorrowedBook_.id))
             );
         }
         return specification;

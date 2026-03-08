@@ -82,7 +82,7 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     public List<Book> findAllWhereBorrowedBookIsNull() {
         LOG.debug("Request to get all books where BorrowedBook is null");
-        return StreamSupport.stream(bookRepository.findAll().spliterator(), false).filter(book -> book.getBorrowedBook() == null).toList();
+        return StreamSupport.stream(bookRepository.findAll().spliterator(), false).filter(book -> book.getBorrowedBooks() == null || book.getBorrowedBooks().isEmpty()).toList();
     }
 
     @Override

@@ -455,4 +455,289 @@ Dark Theme Custom Components
   box-shadow: 0 8px 16px rgba(46, 204, 113, 0.4);
 }
 
+/* ==============================================================
+Borrowed Books Table Improvements
+===============================================================*/
+
+/* Page background */
+.container-fluid {
+  background-color: #0a0f0d;
+  min-height: 100vh;
+}
+
+/* General text color */
+h1, h2, h3, h4, h5, h6 {
+  color: #ecf0f1 !important;
+}
+
+/* Card backgrounds */
+.card {
+  background-color: #1a2620 !important;
+  border-color: #1e8449 !important;
+}
+
+.card-body {
+  background-color: #1a2620 !important;
+  color: #ecf0f1 !important;
+}
+
+/* Fix table text visibility */
+.table {
+  color: #ecf0f1 !important;
+  background-color: transparent !important;
+}
+
+.table tbody td {
+  color: #ecf0f1 !important;
+  background-color: transparent !important;
+  font-size: 1rem !important;
+}
+
+/* Asegurar que TODO el contenido dentro de las celdas sea del color correcto */
+.table tbody td,
+.table tbody td *:not(a):not(.badge):not(fa-icon) {
+  color: #ecf0f1 !important;
+}
+
+/* Forzar color en TODAS las celdas, especialmente en la de fecha */
+.table tbody td:nth-child(2),
+.table tbody td.fw-semibold {
+  color: #ecf0f1 !important;
+}
+
+.table tbody tr {
+  background-color: rgba(26, 38, 32, 0.3) !important;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(46, 204, 113, 0.15) !important;
+}
+
+/* Table header improvements */
+.table-light {
+  background-color: #1a2620 !important;
+  color: #2ecc71 !important;
+}
+
+.table-light th {
+  color: #2ecc71 !important;
+  border-color: #1e8449 !important;
+  font-weight: 600;
+}
+
+/* Badge styling for IDs */
+.badge {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+}
+
+.badge.bg-primary {
+  background-color: #2ecc71 !important;
+  color: #0a0f0d !important;
+}
+
+.badge.bg-primary:hover {
+  background-color: #27ae60 !important;
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.4);
+}
+
+/* Link colors in tables */
+.table a {
+  color: #58d68d !important;
+  font-weight: 500;
+}
+
+.table a:hover {
+  color: #2ecc71 !important;
+  text-decoration: underline;
+}
+
+/* Icon colors */
+.text-info {
+  color: #3498db !important;
+}
+
+.text-secondary {
+  color: #95a5a6 !important;
+}
+
+/* Button group improvements */
+.btn-outline-info {
+  color: #3498db;
+  border-color: #3498db;
+  background-color: transparent;
+}
+
+.btn-outline-info:hover {
+  background-color: #3498db;
+  border-color: #3498db;
+  color: #fff;
+}
+
+.btn-outline-primary {
+  color: #2ecc71;
+  border-color: #2ecc71;
+  background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+  background-color: #2ecc71;
+  border-color: #2ecc71;
+  color: #0a0f0d;
+}
+
+.btn-outline-danger {
+  color: #e74c3c;
+  border-color: #e74c3c;
+  background-color: transparent;
+}
+
+.btn-outline-danger:hover {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+  color: #fff;
+}
+
+.btn-outline-secondary {
+  color: #95a5a6;
+  border-color: #95a5a6;
+  background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #95a5a6;
+  border-color: #95a5a6;
+  color: #0a0f0d;
+}
+
+.btn-success {
+  background-color: #27ae60;
+  border-color: #27ae60;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #229954;
+  border-color: #229954;
+}
+
+/* Pagination improvements */
+.pagination .page-link,
+ngb-pagination .page-link {
+  background-color: #1a2620 !important;
+  border-color: #1e8449 !important;
+  color: #2ecc71 !important;
+  transition: all 0.2s ease;
+}
+
+.pagination .page-link:hover,
+ngb-pagination .page-link:hover,
+.pagination .page-link:focus,
+ngb-pagination .page-link:focus {
+  background-color: #1e8449 !important;
+  border-color: #2ecc71 !important;
+  color: #ecf0f1 !important;
+  box-shadow: 0 0 8px rgba(46, 204, 113, 0.3) !important;
+}
+
+.pagination .page-item.active .page-link,
+ngb-pagination .page-item.active .page-link {
+  background-color: #2ecc71 !important;
+  border-color: #2ecc71 !important;
+  color: #0a0f0d !important;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(46, 204, 113, 0.4) !important;
+}
+
+.pagination .page-item.disabled .page-link,
+ngb-pagination .page-item.disabled .page-link {
+  background-color: #0f1511 !important;
+  border-color: #1e8449 !important;
+  color: #556b2f !important;
+  opacity: 0.6;
+}
+
+/* Navigation buttons (First, Previous, Next, Last) */
+ngb-pagination nav,
+.pagination nav {
+  display: flex;
+  gap: 0.25rem;
+  background-color: transparent !important;
+}
+
+ngb-pagination ul.pagination,
+ul.pagination {
+  margin-bottom: 0;
+  background-color: transparent !important;
+}
+
+/* Asegurar fondo oscuro en TODA el área de paginación */
+ngb-pagination,
+.pagination,
+ngb-pagination *,
+.d-flex:has(ngb-pagination),
+.card-body:has(ngb-pagination) {
+  background-color: #1a2620 !important;
+}
+
+/* Forzar todos los elementos li dentro de pagination */
+.pagination li,
+ngb-pagination li {
+  background-color: transparent !important;
+}
+
+.pagination .page-item,
+ngb-pagination .page-item {
+  background-color: transparent !important;
+}
+
+/* Card improvements for lists */
+.card.shadow-sm {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+.card.border-0 {
+  border: 1px solid #1e8449 !important;
+}
+
+/* Text color utilities */
+.text-muted {
+  color: #95a5a6 !important;
+}
+
+/* fw-semibold con máxima prioridad */
+.fw-semibold,
+td.fw-semibold,
+.table td.fw-semibold,
+.table tbody td.fw-semibold {
+  font-weight: 600 !important;
+  color: #ecf0f1 !important;
+  background-color: transparent !important;
+}
+
+/* Específico para celdas de tabla con fw-semibold */
+.table tbody td.fw-semibold,
+.table tbody td .fw-semibold,
+td.fw-semibold,
+td .fw-semibold,
+.table tbody td:nth-child(2) {
+  color: #ecf0f1 !important;
+  font-size: 1rem !important;
+  background-color: transparent !important;
+}
+
+/* Item count and pagination info */
+jhi-item-count,
+jhi-item-count * {
+  color: #95a5a6 !important;
+}
+
+/* Alert improvements */
+.alert-warning {
+  background-color: rgba(241, 196, 15, 0.15) !important;
+  border-color: #f39c12 !important;
+  color: #f7dc6f !important;
+}
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */

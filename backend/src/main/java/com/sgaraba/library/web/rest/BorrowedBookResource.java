@@ -147,16 +147,29 @@ public class BorrowedBookResource {
      *
      * @param pageable the pagination information.
      * @param criteria the criteria which the requested entities should match.
+     * @param eagerload flag to eager load entities from relationships (This is applicable only if no criteria is specified).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of borrowedBooks in body.
      */
     @GetMapping("")
     public ResponseEntity<List<BorrowedBook>> getAllBorrowedBooks(
         BorrowedBookCriteria criteria,
-        @org.springdoc.core.annotations.ParameterObject Pageable pageable
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
     ) {
-        LOG.debug("REST request to get BorrowedBooks by criteria: {}", criteria);
+        LOG.debug("REST request to get BorrowedBooks by criteria: {}, eagerload: {}", criteria, eagerload);
 
-        Page<BorrowedBook> page = borrowedBookQueryService.findByCriteria(criteria, pageable);
+        Page<BorrowedBook> page;
+        boolean criteriaIsEmpty = criteria == null ||
+            (criteria.getId() == null &&
+             criteria.getBorrowDate() == null &&
+             criteria.getBookId() == null &&
+             criteria.getClientId() == null);
+
+        if (eagerload && criteriaIsEmpty) {
+            page = borrowedBookService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = borrowedBookQueryService.findByCriteria(criteria, pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

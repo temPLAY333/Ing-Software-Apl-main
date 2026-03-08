@@ -18,10 +18,10 @@
                 <constraints nullable="true" />
             </column>
             <column name="book_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_borrowed_book__book_id" />
+                <constraints nullable="true" />
             </column>
             <column name="client_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_borrowed_book__client_id" />
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -45,6 +45,8 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="borrow_date" type="date"/>
+            <column name="book_id" type="numeric"/>
+            <column name="client_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

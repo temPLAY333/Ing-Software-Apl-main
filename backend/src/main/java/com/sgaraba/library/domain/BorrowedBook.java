@@ -27,14 +27,12 @@ public class BorrowedBook implements Serializable {
     @Column(name = "borrow_date")
     private LocalDate borrowDate;
 
-    @JsonIgnoreProperties(value = { "publisher", "authors", "borrowedBook" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "publisher", "authors", "borrowedBooks" }, allowSetters = true)
     private Book book;
 
-    @JsonIgnoreProperties(value = { "borrowedBook" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "borrowedBooks" }, allowSetters = true)
     private Client client;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

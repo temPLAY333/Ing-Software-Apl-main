@@ -1,11 +1,26 @@
-id;isbn;name;publish_year;copies;cover;cover_content_type
-1;asXXX;lifestyle;haze;11272;../fake-data/blob/hipster.png;image/png
-2;because aband;coaxingly;jovially now athwart;15971;../fake-data/blob/hipster.png;image/png
-3;athwart;rationale;shudder;1034;../fake-data/blob/hipster.png;image/png
-4;and shocked;past;alongside;21931;../fake-data/blob/hipster.png;image/png
-5;soybean;fondly frankly;around fork;25541;../fake-data/blob/hipster.png;image/png
-6;if eternity;suspiciously;until yum;14931;../fake-data/blob/hipster.png;image/png
-7;yummy uh-huh ;meanwhile eek hotfoot;ha across;11253;../fake-data/blob/hipster.png;image/png
-8;quicker;overconfidently ha;wherever;10483;../fake-data/blob/hipster.png;image/png
-9;if smuggle;for yum;fatherly curiously;28358;../fake-data/blob/hipster.png;image/png
-10;peony preheat;implode;till collaborate for;22368;../fake-data/blob/hipster.png;image/png
+id;isbn;name;publish_year;copies;publisher_id;cover;cover_content_type
+1;978-84-376-01;Cien Años de Soledad;1967;5;1;../fake-data/blob/hipster.png;image/png
+2;978-84-204-02;La Casa de los Espíritus;1982;4;2;../fake-data/blob/hipster.png;image/png
+3;978-84-339-03;Ficciones;1944;3;3;../fake-data/blob/hipster.png;image/png
+4;978-84-663-04;Rayuela;1963;4;4;../fake-data/blob/hipster.png;image/png
+5;978-84-204-05;La Ciudad y los Perros;1963;3;5;../fake-data/blob/hipster.png;image/png
+6;978-84-206-06;Don Quijote de la Mancha;1605;6;6;../fake-data/blob/hipster.png;image/png
+7;978-84-376-07;Bodas de Sangre;1933;2;13;../fake-data/blob/hipster.png;image/png
+8;978-84-339-08;Veinte Poemas de Amor;1924;4;14;../fake-data/blob/hipster.png;image/png
+9;978-84-339-09;El Laberinto de la Soledad;1950;3;15;../fake-data/blob/hipster.png;image/png
+10;978-84-663-10;La Muerte de Artemio Cruz;1962;2;4;../fake-data/blob/hipster.png;image/png
+11;978-01-321-11;Clean Code;2008;8;11;../fake-data/blob/hipster.png;image/png
+12;978-01-336-12;Refactoring;2018;6;11;../fake-data/blob/hipster.png;image/png
+13;978-02-016-13;Design Patterns;1994;5;11;../fake-data/blob/hipster.png;image/png
+14;978-03-211-14;Test Driven Development;2002;4;11;../fake-data/blob/hipster.png;image/png
+15;978-03-213-15;Domain-Driven Design;2003;5;11;../fake-data/blob/hipster.png;image/png
+16;978-01-346-16;Effective Java;2017;7;11;../fake-data/blob/hipster.png;image/png
+17;978-02-016-17;The Pragmatic Programmer;2019;6;11;../fake-data/blob/hipster.png;image/png
+18;978-03-213-18;Java Concurrency in Practice;2006;4;11;../fake-data/blob/hipster.png;image/png
+19;978-01-321-19;The Clean Coder;2011;5;11;../fake-data/blob/hipster.png;image/png
+20;978-02-016-20;Object-Oriented Analysis;2007;3;11;../fake-data/blob/hipster.png;image/png
+21;978-84-376-21;El Amor en los Tiempos del Cólera;1985;4;1;../fake-data/blob/hipster.png;image/png
+22;978-84-663-22;Conversación en la Catedral;1969;3;5;../fake-data/blob/hipster.png;image/png
+23;978-01-346-23;Clean Architecture;2017;6;11;../fake-data/blob/hipster.png;image/png
+24;978-03-213-24;Patterns of Enterprise Application;2002;4;11;../fake-data/blob/hipster.png;image/png
+25;978-84-339-25;El Aleph;1949;4;3;../fake-data/blob/hipster.png;image/png

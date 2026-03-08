@@ -62,7 +62,7 @@ public class PublisherServiceImpl implements PublisherService {
     public List<Publisher> findAllWhereBookIsNull() {
         LOG.debug("Request to get all publishers where Book is null");
         return StreamSupport.stream(publisherRepository.findAll().spliterator(), false)
-            .filter(publisher -> publisher.getBook() == null)
+            .filter(publisher -> publisher.getBooks() == null || publisher.getBooks().isEmpty())
             .toList();
     }
 

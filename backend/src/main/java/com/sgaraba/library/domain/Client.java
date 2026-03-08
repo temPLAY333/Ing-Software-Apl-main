@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -46,9 +48,10 @@ public class Client implements Serializable {
     @Column(name = "phone", length = 20)
     private String phone;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "book", "client" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client")
-    private BorrowedBook borrowedBook;
+    private Set<BorrowedBook> borrowedBooks = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -130,22 +133,34 @@ public class Client implements Serializable {
         this.phone = phone;
     }
 
-    public BorrowedBook getBorrowedBook() {
-        return this.borrowedBook;
+    public Set<BorrowedBook> getBorrowedBooks() {
+        return this.borrowedBooks;
     }
 
-    public void setBorrowedBook(BorrowedBook borrowedBook) {
-        if (this.borrowedBook != null) {
-            this.borrowedBook.setClient(null);
+    public void setBorrowedBooks(Set<BorrowedBook> borrowedBooks) {
+        if (this.borrowedBooks != null) {
+            this.borrowedBooks.forEach(i -> i.setClient(null));
         }
-        if (borrowedBook != null) {
-            borrowedBook.setClient(this);
+        if (borrowedBooks != null) {
+            borrowedBooks.forEach(i -> i.setClient(this));
         }
-        this.borrowedBook = borrowedBook;
+        this.borrowedBooks = borrowedBooks;
     }
 
-    public Client borrowedBook(BorrowedBook borrowedBook) {
-        this.setBorrowedBook(borrowedBook);
+    public Client borrowedBooks(Set<BorrowedBook> borrowedBooks) {
+        this.setBorrowedBooks(borrowedBooks);
+        return this;
+    }
+
+    public Client addBorrowedBook(BorrowedBook borrowedBook) {
+        this.borrowedBooks.add(borrowedBook);
+        borrowedBook.setClient(this);
+        return this;
+    }
+
+    public Client removeBorrowedBook(BorrowedBook borrowedBook) {
+        this.borrowedBooks.remove(borrowedBook);
+        borrowedBook.setClient(null);
         return this;
     }
 

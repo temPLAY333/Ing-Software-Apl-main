@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,9 +31,10 @@ public class Publisher implements Serializable {
     @Column(name = "name", length = 100, nullable = false, unique = true)
     private String name;
 
-    @JsonIgnoreProperties(value = { "publisher", "authors", "borrowedBook" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "publisher")
-    private Book book;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "publisher")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "publisher", "authors", "borrowedBooks" }, allowSetters = true)
+    private Set<Book> books = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -61,22 +64,34 @@ public class Publisher implements Serializable {
         this.name = name;
     }
 
-    public Book getBook() {
-        return this.book;
+    public Set<Book> getBooks() {
+        return this.books;
     }
 
-    public void setBook(Book book) {
-        if (this.book != null) {
-            this.book.setPublisher(null);
+    public void setBooks(Set<Book> books) {
+        if (this.books != null) {
+            this.books.forEach(i -> i.setPublisher(null));
         }
-        if (book != null) {
-            book.setPublisher(this);
+        if (books != null) {
+            books.forEach(i -> i.setPublisher(this));
         }
-        this.book = book;
+        this.books = books;
     }
 
-    public Publisher book(Book book) {
-        this.setBook(book);
+    public Publisher books(Set<Book> books) {
+        this.setBooks(books);
+        return this;
+    }
+
+    public Publisher addBook(Book book) {
+        this.books.add(book);
+        book.setPublisher(this);
+        return this;
+    }
+
+    public Publisher removeBook(Book book) {
+        this.books.remove(book);
+        book.setPublisher(null);
         return this;
     }
 

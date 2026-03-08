@@ -38,7 +38,7 @@ public class Author implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "authors")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "publisher", "authors", "borrowedBook" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "publisher", "authors", "borrowedBooks" }, allowSetters = true)
     private Set<Book> books = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -74,7 +74,7 @@ public class ClientServiceImpl implements ClientService {
     public List<Client> findAllWhereBorrowedBookIsNull() {
         LOG.debug("Request to get all clients where BorrowedBook is null");
         return StreamSupport.stream(clientRepository.findAll().spliterator(), false)
-            .filter(client -> client.getBorrowedBook() == null)
+            .filter(client -> client.getBorrowedBooks() == null || client.getBorrowedBooks().isEmpty())
             .toList();
     }
 

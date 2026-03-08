@@ -52,9 +52,8 @@ public class Book implements Serializable {
     @Column(name = "cover_content_type")
     private String coverContentType;
 
-    @JsonIgnoreProperties(value = { "book" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "books" }, allowSetters = true)
     private Publisher publisher;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -63,9 +62,10 @@ public class Book implements Serializable {
     @JsonIgnoreProperties(value = { "books" }, allowSetters = true)
     private Set<Author> authors = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "book", "client" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "book")
-    private BorrowedBook borrowedBook;
+    private Set<BorrowedBook> borrowedBooks = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -196,22 +196,34 @@ public class Book implements Serializable {
         return this;
     }
 
-    public BorrowedBook getBorrowedBook() {
-        return this.borrowedBook;
+    public Set<BorrowedBook> getBorrowedBooks() {
+        return this.borrowedBooks;
     }
 
-    public void setBorrowedBook(BorrowedBook borrowedBook) {
-        if (this.borrowedBook != null) {
-            this.borrowedBook.setBook(null);
+    public void setBorrowedBooks(Set<BorrowedBook> borrowedBooks) {
+        if (this.borrowedBooks != null) {
+            this.borrowedBooks.forEach(i -> i.setBook(null));
         }
-        if (borrowedBook != null) {
-            borrowedBook.setBook(this);
+        if (borrowedBooks != null) {
+            borrowedBooks.forEach(i -> i.setBook(this));
         }
-        this.borrowedBook = borrowedBook;
+        this.borrowedBooks = borrowedBooks;
     }
 
-    public Book borrowedBook(BorrowedBook borrowedBook) {
-        this.setBorrowedBook(borrowedBook);
+    public Book borrowedBooks(Set<BorrowedBook> borrowedBooks) {
+        this.setBorrowedBooks(borrowedBooks);
+        return this;
+    }
+
+    public Book addBorrowedBook(BorrowedBook borrowedBook) {
+        this.borrowedBooks.add(borrowedBook);
+        borrowedBook.setBook(this);
+        return this;
+    }
+
+    public Book removeBorrowedBook(BorrowedBook borrowedBook) {
+        this.borrowedBooks.remove(borrowedBook);
+        borrowedBook.setBook(null);
         return this;
     }
 

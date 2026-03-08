@@ -70,7 +70,7 @@ public class PublisherQueryService extends QueryService<Publisher> {
                 Boolean.TRUE.equals(criteria.getDistinct()) ? distinct(criteria.getDistinct()) : null,
                 buildRangeSpecification(criteria.getId(), Publisher_.id),
                 buildStringSpecification(criteria.getName(), Publisher_.name),
-                buildSpecification(criteria.getBookId(), root -> root.join(Publisher_.book, JoinType.LEFT).get(Book_.id))
+                buildSpecification(criteria.getBookId(), root -> root.join(Publisher_.books, JoinType.LEFT).get(Book_.id))
             );
         }
         return specification;

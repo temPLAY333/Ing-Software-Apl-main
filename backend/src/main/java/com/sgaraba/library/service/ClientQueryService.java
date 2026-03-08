@@ -75,7 +75,7 @@ public class ClientQueryService extends QueryService<Client> {
                 buildStringSpecification(criteria.getAddress(), Client_.address),
                 buildStringSpecification(criteria.getPhone(), Client_.phone),
                 buildSpecification(criteria.getBorrowedBookId(), root ->
-                    root.join(Client_.borrowedBook, JoinType.LEFT).get(BorrowedBook_.id)
+                    root.join(Client_.borrowedBooks, JoinType.LEFT).get(BorrowedBook_.id)
                 )
             );
         }

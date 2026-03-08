@@ -1,11 +1,21 @@
 id;first_name;last_name
-1;Eugenia;Hamill
-2;Trenton;Roberts
-3;Gino;Lockman
-4;Gaston;Conn
-5;Krystina;Adams
-6;Veronica;Bednar
-7;Adolphus;Tremblay
-8;Berneice;Effertz
-9;Josefina;Gislason
-10;Stella;Brakus-Romaguera
+1;Gabriel;García Márquez
+2;Isabel;Allende
+3;Jorge Luis;Borges
+4;Julio;Cortázar
+5;Mario;Vargas Llosa
+6;Miguel;de Cervantes
+7;Federico;García Lorca
+8;Pablo;Neruda
+9;Octavio;Paz
+10;Carlos;Fuentes
+11;Robert;Martin
+12;Martin;Fowler
+13;Erich;Gamma
+14;Kent;Beck
+15;Eric;Evans
+16;Joshua;Bloch
+17;Andrew;Hunt
+18;David;Thomas
+19;Brian;Goetz
+20;Grady;Booch
