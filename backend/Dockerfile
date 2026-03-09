@@ -1,36 +1,9 @@
 # ================================
-# Multi-Stage Dockerfile for Library Application
-# Stage 1: Build - Compile Java backend and Angular frontend
-# Stage 2: Runtime - Minimal JRE image
+# Optimized Dockerfile for Jenkins CI/CD
+# Assumes JAR is already built by Jenkins
+# Single-stage runtime image only
 # ================================
 
-# Stage 1: Build
-FROM maven:3.9-eclipse-temurin-17-alpine AS build
-
-WORKDIR /app
-
-# Copy Maven files first for layer caching
-COPY pom.xml .
-
-# Download dependencies (cached layer)
-RUN mvn dependency:go-offline -B
-
-# Copy source code
-COPY src ./src
-COPY package.json package-lock.json ./
-COPY angular.json tsconfig.json tsconfig.app.json tsconfig.spec.json ./
-COPY webpack ./webpack
-COPY sonar-project.properties .
-
-# Build the application
-# - Uses production profile
-# - Skips tests (run in CI/CD)
-# - Skips code quality checks (Checkstyle, Modernizer)
-# - Skips Cypress binary download (not needed in production)
-ENV CYPRESS_INSTALL_BINARY=0
-RUN mvn clean package -Pprod -DskipTests -Dcheckstyle.skip=true -Dmodernizer.skip=true
-
-# Stage 2: Runtime
 FROM eclipse-temurin:17-jre-alpine
 
 # Install curl for healthchecks
@@ -42,8 +15,8 @@ RUN addgroup -g 1001 -S appuser && \
 
 WORKDIR /app
 
-# Copy JAR from build stage
-COPY --from=build --chown=appuser:appuser /app/target/*.jar app.jar
+# Copy pre-built JAR (built by Jenkins)
+COPY --chown=appuser:appuser target/*.jar app.jar
 
 # Create logs directory for ELK collection
 RUN mkdir -p /app/logs && chown -R appuser:appuser /app/logs
