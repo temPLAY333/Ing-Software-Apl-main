@@ -26,6 +26,8 @@ COPY sonar-project.properties .
 # - Uses production profile
 # - Skips tests (run in CI/CD)
 # - Skips code quality checks (Checkstyle, Modernizer)
+# - Skips Cypress binary download (not needed in production)
+ENV CYPRESS_INSTALL_BINARY=0
 RUN mvn clean package -Pprod -DskipTests -Dcheckstyle.skip=true -Dmodernizer.skip=true
 
 # Stage 2: Runtime
