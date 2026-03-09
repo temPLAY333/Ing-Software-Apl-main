@@ -26,6 +26,13 @@ services:
       - SPRING_MAIL_PORT=1025
       - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=false
       - ENVIRONMENT=production
+      # CORS habilitado para Ionic
+      - JHIPSTER_CORS_ALLOWED_ORIGINS=http://localhost:8100,http://localhost:9000,http://localhost:4200
+      - JHIPSTER_CORS_ALLOWED_METHODS=*
+      - JHIPSTER_CORS_ALLOWED_HEADERS=*
+      - JHIPSTER_CORS_EXPOSED_HEADERS=Authorization,Link,X-Total-Count,X-libraryApp-alert,X-libraryApp-error,X-libraryApp-params
+      - JHIPSTER_CORS_ALLOW_CREDENTIALS=true
+      - JHIPSTER_CORS_MAX_AGE=1800
       # REDUCIDO: 256MB en lugar de 512MB
       - JAVA_OPTS=-Xmx256m -Xms128m
     ports:
@@ -34,11 +41,8 @@ services:
       - app_logs:/app/logs
     networks:
       - app-network
-      - elk
     depends_on:
       postgresql:
-        condition: service_healthy
-      logstash:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/management/health"]
@@ -51,6 +55,36 @@ services:
         limits:
           cpus: '1.0'
           memory: 384M
+
+  # ================================
+  # Ionic Mobile App
+  # ================================
+  ionic-app:
+    image: library-ionic:latest
+    container_name: library-ionic
+    build:
+      context: ../library-mobile
+      dockerfile: Dockerfile
+    environment:
+      - API_URL=http://app:8080
+    ports:
+      - "8100:8100"
+    networks:
+      - app-network
+    depends_on:
+      app:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:8100"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 64M
 
   # ================================
   # PostgreSQL Database (Alpine = más ligero)
@@ -98,24 +132,12 @@ services:
       - "ES_JAVA_OPTS=-Xms192m -Xmx192m"
       - xpack.security.enabled=false
       - xpack.monitoring.collection.enabled=false
-      # Desactivar features no esenciales
       - xpack.ml.enabled=false
-      - xpack.graph.enabled=false
-      - xpack.watcher.enabled=false
-      - xpack.reporting.enabled=false
       - cluster.routing.allocation.disk.threshold_enabled=false
       # OPTIMIZACIONES DE RENDIMIENTO (más lento, menos recursos)
       - indices.memory.index_buffer_size=10%
       - thread_pool.write.queue_size=200
       - thread_pool.search.queue_size=500
-      # Refresh cada 30s en lugar de 1s (mucho menos CPU)
-      - index.refresh_interval=30s
-      # Reducir shards y replicas
-      - index.number_of_shards=1
-      - index.number_of_replicas=0
-      # Translog menos frecuente
-      - index.translog.durability=async
-      - index.translog.sync_interval=30s
     ports:
       - "9200:9200"
     volumes:
@@ -143,7 +165,6 @@ services:
     container_name: library-logstash
     volumes:
       - ./src/main/docker/logstash/pipeline:/usr/share/logstash/pipeline:ro
-      - ./src/main/docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
     ports:
       - "5000:5000"
       - "9600:9600"
@@ -154,8 +175,9 @@ services:
       - PIPELINE_WORKERS=1
       - PIPELINE_BATCH_SIZE=125
       - PIPELINE_BATCH_DELAY=50
-      # Reducir uso de CPU
+      # Configuración directa por variables de entorno
       - LOG_LEVEL=error
+      - XPACK_MONITORING_ENABLED=false
     networks:
       - elk
     depends_on:

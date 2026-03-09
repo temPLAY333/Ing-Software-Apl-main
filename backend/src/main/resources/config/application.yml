@@ -194,14 +194,14 @@ info:
 jhipster:
   clientApp:
     name: 'libraryApp'
-  # By default CORS is disabled. Uncomment to enable.
-  # cors:
-  #   allowed-origins: "http://localhost:8100,http://localhost:9000"
-  #   allowed-methods: "*"
-  #   allowed-headers: "*"
-  #   exposed-headers: "Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params"
-  #   allow-credentials: true
-  #   max-age: 1800
+  # CORS habilitado para Ionic y desarrollo
+  cors:
+    allowed-origins: "http://localhost:8100,http://localhost:9000"
+    allowed-methods: "*"
+    allowed-headers: "*"
+    exposed-headers: "Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params"
+    allow-credentials: true
+    max-age: 1800
   mail:
     from: library@localhost
   api-docs:

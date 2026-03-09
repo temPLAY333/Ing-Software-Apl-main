@@ -24,6 +24,7 @@ export class BooksPage implements OnInit {
   books: Book[] = [];
   loading = false;
   isOnline = true;
+  isBackendAvailable = true;
   private previousOnlineState = true;
 
   constructor(
@@ -48,6 +49,14 @@ export class BooksPage implements OnInit {
       if (wasOfflineNowOnline) {
         console.log('✅ Conexión restaurada, recargando libros...');
         this.loadBooks();
+      }
+    });
+
+    // ✅ MEJORA PWA: Suscribirse al estado del backend
+    this.networkService.backendStatus$.subscribe(isAvailable => {
+      this.isBackendAvailable = isAvailable;
+      if (!isAvailable) {
+        console.log('⚠️ Backend no disponible, usando caché');
       }
     });
   }

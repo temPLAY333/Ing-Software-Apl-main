@@ -34,8 +34,14 @@ export class BookService {
     if (this.network.isOnline) {
       return this.http.get<Book[]>(this.apiUrl, { params: httpParams }).pipe(
         tap(books => {
-          // Guardar en cache
+          // Guardar lista completa en caché
           this.storage.set(BOOKS_STORAGE_KEY, books);
+
+          // ✅ MEJORA PWA: Precachear cada libro individual para que funcionen offline
+          books.forEach(book => {
+            this.storage.set(`${BOOK_DETAIL_PREFIX}${book.id}`, book);
+          });
+          console.log(`✅ Precacheados ${books.length} libros para uso offline`);
         }),
         catchError(error => {
           console.error('Error fetching books from API, loading from cache:', error);

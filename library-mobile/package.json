@@ -7,6 +7,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:pwa": "ng build --configuration=production",
+    "serve:pwa": "npm run build:pwa && http-server www -p 8100 -c-1 -o",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"

@@ -10,6 +10,7 @@
           "/favicon.ico",
           "/index.html",
           "/manifest.webmanifest",
+          "/offline.html",
           "/*.css",
           "/*.js"
         ]
@@ -37,7 +38,7 @@
       "cacheConfig": {
         "maxSize": 100,
         "maxAge": "1h",
-        "timeout": "10s",
+        "timeout": "3s",
         "strategy": "freshness"
       }
     },
@@ -50,7 +51,7 @@
       "cacheConfig": {
         "maxSize": 50,
         "maxAge": "1h",
-        "timeout": "10s",
+        "timeout": "3s",
         "strategy": "freshness"
       }
     },
@@ -62,7 +63,7 @@
       "cacheConfig": {
         "maxSize": 50,
         "maxAge": "30m",
-        "timeout": "10s",
+        "timeout": "3s",
         "strategy": "performance"
       }
     }
