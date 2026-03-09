@@ -10,8 +10,8 @@ pipeline {
 
     environment {
         APP_NAME = 'library'
-        DOCKER_IMAGE = "library/app"
-        // DOCKER_CREDENTIALS = credentials('docker-hub-credentials')  // Configure this for DockerHub push
+        DOCKER_IMAGE = "templay333/library-app"
+        DOCKER_CREDENTIALS = credentials('docker-hub-credentials')
         K8S_NAMESPACE = 'production'
     }
 
@@ -138,19 +138,18 @@ pipeline {
 
         stage('Push Docker Image') {
             when {
-                expression { false }  // DISABLED - Requires DockerHub credentials configuration
+                expression { true }  // ENABLED - Push to DockerHub
             }
             steps {
-                echo '📤 Pushing Docker image to registry...'
-                echo '⚠️  Skipped - Configure docker-hub-credentials in Jenkins to enable'
-                // Uncomment below when credentials are configured:
-                // script {
-                //     sh """
-                //         echo \$DOCKER_CREDENTIALS_PSW | docker login -u \$DOCKER_CREDENTIALS_USR --password-stdin
-                //         docker push ${DOCKER_IMAGE}:${IMAGE_TAG}
-                //         docker push ${DOCKER_IMAGE}:latest
-                //     """
-                // }
+                echo '📤 Pushing Docker image to DockerHub...'
+                script {
+                    sh """
+                        echo \$DOCKER_CREDENTIALS_PSW | docker login -u \$DOCKER_CREDENTIALS_USR --password-stdin
+                        docker push ${DOCKER_IMAGE}:${IMAGE_TAG}
+                        docker push ${DOCKER_IMAGE}:latest
+                        docker logout
+                    """
+                }
             }
         }
 
