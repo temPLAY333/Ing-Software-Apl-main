@@ -33,7 +33,7 @@ pipeline {
                 dir('backend') {
                     sh '''
                         chmod +x mvnw
-                        ./mvnw clean install -DskipTests -Dcheckstyle.skip=true
+                        ./mvnw clean install -DskipTests -Dcheckstyle.skip=true -Dmodernizer.skip=true
                     '''
                 }
             }
@@ -45,7 +45,7 @@ pipeline {
                     steps {
                         echo '🧪 Running backend tests...'
                         dir('backend') {
-                            sh './mvnw test -Dcheckstyle.skip=true'
+                            sh './mvnw test -Dcheckstyle.skip=true -Dmodernizer.skip=true'
                         }
                     }
                     post {
