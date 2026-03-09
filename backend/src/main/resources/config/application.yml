@@ -71,6 +71,11 @@ management:
   observations:
     key-values:
       application: ${spring.application.name}
+  mail:
+    host: localhost
+    port: 1025
+    username:
+    password:
   metrics:
     enable:
       http: true
