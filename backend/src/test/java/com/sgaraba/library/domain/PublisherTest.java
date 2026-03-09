@@ -28,12 +28,12 @@ class PublisherTest {
         Publisher publisher = getPublisherRandomSampleGenerator();
         Book bookBack = getBookRandomSampleGenerator();
 
-        publisher.setBook(bookBack);
-        assertThat(publisher.getBook()).isEqualTo(bookBack);
+        publisher.addBook(bookBack);
+        assertThat(publisher.getBooks()).containsOnly(bookBack);
         assertThat(bookBack.getPublisher()).isEqualTo(publisher);
 
-        publisher.book(null);
-        assertThat(publisher.getBook()).isNull();
+        publisher.removeBook(bookBack);
+        assertThat(publisher.getBooks()).doesNotContain(bookBack);
         assertThat(bookBack.getPublisher()).isNull();
     }
 }

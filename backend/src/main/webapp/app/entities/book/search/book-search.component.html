@@ -49,11 +49,12 @@
           </div>
 
           <div class="filter-section">
-            <label class="form-label" jhiTranslate="libraryApp.book.search.publishYear">Año de publicación</label>
+            <label class="form-label" for="yearFrom" jhiTranslate="libraryApp.book.search.publishYear">Año de publicación</label>
             <div class="row g-2">
               <div class="col-6">
                 <input
                   type="text"
+                  id="yearFrom"
                   class="form-control"
                   formControlName="yearFrom"
                   placeholder="{{ 'libraryApp.book.search.yearFrom' | translate }}"

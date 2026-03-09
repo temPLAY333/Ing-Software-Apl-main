@@ -28,12 +28,12 @@ class ClientTest {
         Client client = getClientRandomSampleGenerator();
         BorrowedBook borrowedBookBack = getBorrowedBookRandomSampleGenerator();
 
-        client.setBorrowedBook(borrowedBookBack);
-        assertThat(client.getBorrowedBook()).isEqualTo(borrowedBookBack);
+        client.addBorrowedBook(borrowedBookBack);
+        assertThat(client.getBorrowedBooks()).containsOnly(borrowedBookBack);
         assertThat(borrowedBookBack.getClient()).isEqualTo(client);
 
-        client.borrowedBook(null);
-        assertThat(client.getBorrowedBook()).isNull();
+        client.removeBorrowedBook(borrowedBookBack);
+        assertThat(client.getBorrowedBooks()).doesNotContain(borrowedBookBack);
         assertThat(borrowedBookBack.getClient()).isNull();
     }
 }

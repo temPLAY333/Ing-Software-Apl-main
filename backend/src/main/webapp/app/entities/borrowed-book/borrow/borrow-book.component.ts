@@ -107,6 +107,6 @@ export default class BorrowBookComponent implements OnInit {
   }
 
   trackId(index: number, item: IBorrowedBook): number {
-    return item.id!;
+    return item.id;
   }
 }

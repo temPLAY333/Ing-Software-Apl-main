@@ -2,7 +2,6 @@ package com.sgaraba.library.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 import com.sgaraba.library.domain.Book;
@@ -187,18 +186,18 @@ class BookServiceImplTest {
         Book book1 = new Book();
         book1.setId(1L);
         book1.setName("Available Book");
-        book1.setBorrowedBook(null);
+        // Empty borrowedBooks set by default
 
         Book book2 = new Book();
         book2.setId(2L);
         book2.setName("Borrowed Book");
         BorrowedBook borrowedBook = new BorrowedBook();
-        book2.setBorrowedBook(borrowedBook);
+        book2.addBorrowedBook(borrowedBook);
 
         Book book3 = new Book();
         book3.setId(3L);
         book3.setName("Another Available Book");
-        book3.setBorrowedBook(null);
+        // Empty borrowedBooks set by default
 
         when(bookRepository.findAll()).thenReturn(Arrays.asList(book1, book2, book3));
 

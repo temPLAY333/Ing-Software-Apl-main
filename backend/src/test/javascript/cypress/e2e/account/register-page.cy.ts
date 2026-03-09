@@ -323,10 +323,15 @@ describe('/account/register', () => {
     });
 
     it('should allow tab navigation through form fields', () => {
-      cy.get(usernameRegisterSelector).focus().type('{tab}');
+      cy.get(usernameRegisterSelector).focus();
+      cy.focused().type('{tab}');
       cy.focused().should('have.attr', 'id', 'email');
 
       cy.focused().type('{tab}');
       cy.focused().should('have.attr', 'id', 'password');
 
       cy.focused().type('{tab}');
+      cy.focused().should('have.attr', 'id', 'confirmPassword');
+    });
+  });
+});

@@ -115,18 +115,18 @@ class PublisherServiceImplTest {
         Publisher publisher1 = new Publisher();
         publisher1.setId(1L);
         publisher1.setName("Publisher Without Book");
-        publisher1.setBook(null);
+        // Empty books set by default
 
         Publisher publisher2 = new Publisher();
         publisher2.setId(2L);
         publisher2.setName("Publisher With Book");
         Book book = new Book();
-        publisher2.setBook(book);
+        publisher2.addBook(book);
 
         Publisher publisher3 = new Publisher();
         publisher3.setId(3L);
         publisher3.setName("Another Publisher Without Book");
-        publisher3.setBook(null);
+        // Empty books set by default
 
         when(publisherRepository.findAll()).thenReturn(Arrays.asList(publisher1, publisher2, publisher3));
 

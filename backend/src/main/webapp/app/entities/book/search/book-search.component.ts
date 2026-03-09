@@ -76,34 +76,24 @@ export default class BookSearchComponent implements OnInit {
 
     if (formValue.searchTerm) {
       const term = formValue.searchTerm.toLowerCase();
-      filteredBooks = filteredBooks.filter(book =>
-        book.name?.toLowerCase().includes(term) ||
-        book.isbn?.toLowerCase().includes(term)
-      );
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+      filteredBooks = filteredBooks.filter(book => book.name?.toLowerCase().includes(term) || book.isbn?.toLowerCase().includes(term));
     }
 
     if (formValue.publisher) {
-      filteredBooks = filteredBooks.filter(book =>
-        book.publisher?.id === Number(formValue.publisher)
-      );
+      filteredBooks = filteredBooks.filter(book => book.publisher?.id === Number(formValue.publisher));
     }
 
     if (formValue.author) {
-      filteredBooks = filteredBooks.filter(book =>
-        book.authors?.some((author: IAuthor) => author.id === Number(formValue.author))
-      );
+      filteredBooks = filteredBooks.filter(book => book.authors?.some((author: IAuthor) => author.id === Number(formValue.author)));
     }
 
     if (formValue.yearFrom) {
-      filteredBooks = filteredBooks.filter(book =>
-        book.publishYear && book.publishYear >= formValue.yearFrom!
-      );
+      filteredBooks = filteredBooks.filter(book => book.publishYear && book.publishYear >= formValue.yearFrom!);
     }
 
     if (formValue.yearTo) {
-      filteredBooks = filteredBooks.filter(book =>
-        book.publishYear && book.publishYear <= formValue.yearTo!
-      );
+      filteredBooks = filteredBooks.filter(book => book.publishYear && book.publishYear <= formValue.yearTo!);
     }
 
     this.books.set(filteredBooks);
@@ -119,6 +109,6 @@ export default class BookSearchComponent implements OnInit {
   }
 
   trackId(index: number, item: IBook): number {
-    return item.id!;
+    return item.id;
   }
 }

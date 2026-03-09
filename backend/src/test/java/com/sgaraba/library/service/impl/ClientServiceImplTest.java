@@ -166,18 +166,18 @@ class ClientServiceImplTest {
         Client client1 = new Client();
         client1.setId(1L);
         client1.setFirstName("John");
-        client1.setBorrowedBook(null);
+        // Empty borrowedBooks set by default
 
         Client client2 = new Client();
         client2.setId(2L);
         client2.setFirstName("Jane");
         BorrowedBook borrowedBook = new BorrowedBook();
-        client2.setBorrowedBook(borrowedBook);
+        client2.addBorrowedBook(borrowedBook);
 
         Client client3 = new Client();
         client3.setId(3L);
         client3.setFirstName("Bob");
-        client3.setBorrowedBook(null);
+        // Empty borrowedBooks set by default
 
         when(clientRepository.findAll()).thenReturn(Arrays.asList(client1, client2, client3));
 

@@ -62,12 +62,12 @@ class BookTest {
         Book book = getBookRandomSampleGenerator();
         BorrowedBook borrowedBookBack = getBorrowedBookRandomSampleGenerator();
 
-        book.setBorrowedBook(borrowedBookBack);
-        assertThat(book.getBorrowedBook()).isEqualTo(borrowedBookBack);
+        book.addBorrowedBook(borrowedBookBack);
+        assertThat(book.getBorrowedBooks()).containsOnly(borrowedBookBack);
         assertThat(borrowedBookBack.getBook()).isEqualTo(book);
 
-        book.borrowedBook(null);
-        assertThat(book.getBorrowedBook()).isNull();
+        book.removeBorrowedBook(borrowedBookBack);
+        assertThat(book.getBorrowedBooks()).doesNotContain(borrowedBookBack);
         assertThat(borrowedBookBack.getBook()).isNull();
     }
 }

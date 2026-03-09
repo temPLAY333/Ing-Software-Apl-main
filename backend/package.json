@@ -55,7 +55,7 @@
     "java:war": "./mvnw -ntp verify -DskipTests --batch-mode -Pwar",
     "java:war:dev": "npm run java:war -- -Pdev,webapp",
     "java:war:prod": "npm run java:war -- -Pprod",
-    "jest": "jest --coverage --logHeapUsage --maxWorkers=2 --config jest.conf.js",
+    "jest": "jest --logHeapUsage --maxWorkers=2 --config jest.conf.js",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky",

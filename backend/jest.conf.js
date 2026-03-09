@@ -5,8 +5,25 @@ const {
 } = require('./tsconfig.json');
 
 module.exports = {
-  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|dayjs/esm)'],
+  preset: 'jest-preset-angular',
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$|dayjs)'],
   resolver: 'jest-preset-angular/build/resolvers/ng-jest-resolver.js',
+  collectCoverage: false,
+  coverageReporters: [],
+  coverageProvider: 'v8',
+  transform: {
+    '^.+\\.(ts|js|mjs|html|svg)$': [
+      'jest-preset-angular',
+      {
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+        stringifyContentPathRegex: '\\.(html|svg)$',
+        isolatedModules: true,
+        astTransformers: {
+          before: [],
+        },
+      },
+    ],
+  },
   globals: {
     __VERSION__: 'test',
   },
@@ -16,11 +33,7 @@ module.exports = {
   cacheDirectory: '<rootDir>/target/jest-cache',
   coverageDirectory: '<rootDir>/target/test-results/',
   moduleNameMapper: pathsToModuleNameMapper(paths, { prefix: `<rootDir>/${baseUrl}/` }),
-  reporters: [
-    'default',
-    ['jest-junit', { outputDirectory: '<rootDir>/target/test-results/', outputName: 'TESTS-results-jest.xml' }],
-    ['jest-sonar', { outputDirectory: './target/test-results/jest', outputName: 'TESTS-results-sonar.xml' }],
-  ],
+  reporters: ['default'],
   testMatch: ['<rootDir>/src/main/webapp/app/**/@(*.)@(spec.ts)'],
   testEnvironmentOptions: {
     url: 'https://jhipster.tech',
