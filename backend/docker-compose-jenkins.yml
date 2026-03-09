@@ -1,0 +1,59 @@
+# ================================
+# Docker Compose - Jenkins CI/CD (Simplified)
+# Jenkins Server + Docker capabilities
+# ================================
+
+services:
+  # ================================
+  # Jenkins CI/CD Server
+  # ================================
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: jenkins
+    restart: unless-stopped
+    user: root  # Necesario para acceso a Docker socket
+    environment:
+      - JENKINS_OPTS=--prefix=/jenkins
+      - JAVA_OPTS=-Dhudson.footerURL=http://localhost:8090/jenkins -Xmx2g -Xms1g
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    ports:
+      - "8090:8080"      # Jenkins Web UI (puerto 8090 para no conflictuar con la app)
+      - "50000:50000"    # Jenkins agent port
+    volumes:
+      # Persistencia de datos de Jenkins
+      - jenkins_home:/var/jenkins_home
+
+      # Acceso a Docker (para build de imágenes)
+      # WINDOWS: Asegúrate de tener Docker Desktop corriendo
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      # Caché de Maven (opcional, mejora performance)
+      - jenkins_maven_cache:/root/.m2
+
+      # Workspace del proyecto (solo lectura)
+      - ./:/workspace:ro
+    networks:
+      - jenkins-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/login || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+
+# ================================
+# Networks
+# ================================
+networks:
+  jenkins-network:
+    driver: bridge
+    name: jenkins-network
+
+# ================================
+# Volumes
+# ================================
+volumes:
+  jenkins_home:
+    name: jenkins_home
+  jenkins_maven_cache:
+    name: jenkins_maven_cache

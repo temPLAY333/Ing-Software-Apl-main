@@ -12,7 +12,7 @@ pipeline {
         DOCKER_IMAGE = "library/app"
         DOCKER_REGISTRY = credentials('docker-registry-url')
         DOCKER_CREDENTIALS = credentials('docker-hub-credentials')
-        SONAR_TOKEN = credentials('sonar-token')
+        // SONAR_TOKEN = credentials('sonar-token')  // Disabled - SonarQube not required
         K8S_NAMESPACE = 'production'
     }
 
@@ -73,6 +73,9 @@ pipeline {
         }
 
         stage('Code Quality Analysis') {
+            when {
+                expression { false }  // DISABLED - SonarQube not required for basic deployment
+            }
             steps {
                 echo '📊 Running SonarQube analysis...'
                 dir('backend') {
@@ -84,6 +87,9 @@ pipeline {
         }
 
         stage('Quality Gate') {
+            when {
+                expression { false }  // DISABLED - SonarQube not required for basic deployment
+            }
             steps {
                 echo '🚦 Checking quality gate...'
                 timeout(time: 5, unit: 'MINUTES') {
