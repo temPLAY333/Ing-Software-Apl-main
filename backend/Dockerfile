@@ -20,12 +20,13 @@ COPY src ./src
 COPY package.json package-lock.json ./
 COPY angular.json tsconfig.json tsconfig.app.json tsconfig.spec.json ./
 COPY webpack ./webpack
+COPY sonar-project.properties .
 
 # Build the application
 # - Uses production profile
 # - Skips tests (run in CI/CD)
-# - Skips properties plugin (SonarQube not needed in Docker build)
-RUN mvn clean package -Pprod -DskipTests -Dproperties.skip=true
+# - Skips code quality checks (Checkstyle, Modernizer)
+RUN mvn clean package -Pprod -DskipTests -Dcheckstyle.skip=true -Dmodernizer.skip=true
 
 # Stage 2: Runtime
 FROM eclipse-temurin:17-jre-alpine
