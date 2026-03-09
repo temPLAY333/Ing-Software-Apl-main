@@ -180,8 +180,8 @@ pipeline {
 
     post {
         always {
-            echo '🧹 Cleaning workspace...'
-            cleanWs()
+            echo '🧹 Pipeline execution completed'
+            // cleanWs()  // Requires Workspace Cleanup Plugin
         }
         success {
             echo '✅ Pipeline completed successfully!'
