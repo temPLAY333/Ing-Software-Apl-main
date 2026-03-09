@@ -24,7 +24,8 @@ COPY webpack ./webpack
 # Build the application
 # - Uses production profile
 # - Skips tests (run in CI/CD)
-RUN mvn clean package -Pprod -DskipTests
+# - Skips properties plugin (SonarQube not needed in Docker build)
+RUN mvn clean package -Pprod -DskipTests -Dproperties.skip=true
 
 # Stage 2: Runtime
 FROM eclipse-temurin:17-jre-alpine
